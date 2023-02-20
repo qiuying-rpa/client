@@ -3,28 +3,24 @@
         v-for="{title, icon, children}, index in props.items"
         :key="index"
     >
-        <list-item :item="{title, icon}">
+        <list-item :item="{title, icon}" :offset="[props.depth*2.5, 0]">
             <template #item-before v-if="children?.length">
                 <div class="i-mdi-menu-down mr-1 text-lg" />
             </template>
         </list-item>
-        <list-view :items="children" :offset="[2.5 + props.offset[0], 0]">
-            <template #default="{attrs}">
-                <tree-view v-bind="attrs"/>
-            </template>
-        </list-view>
+        <tree-view :items="children" :depth="props.depth+1"/>
     </div>
 </template>
 
 <script setup lang="ts">
 
 interface Props {
-    items: ViewItem[],
-    offset?: [number, number]
+    items: TreeItem[],
+    depth?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
   items: () => [],
-  offset: () => [0, 0]
+  depth: 0
 })
 </script>

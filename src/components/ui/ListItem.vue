@@ -1,8 +1,8 @@
 <template>
 <div
-    class="hover-bg-#f4f4f5 pa-2 rd-1 text-sm opacity-80 flex items-center cursor-pointer"
+    class="pa-2 rd-1 text-sm opacity-80 flex items-center cursor-pointer"
+    :class="props.active?['bg-#dbeafe', 'hover-bg-#dbeafe']:['hover-bg-#f4f4f5']"
 >
-    <slot name="item-before"/>
     <div
         class="flex items-center"
         :style="{
@@ -10,6 +10,7 @@
             paddingTop: props.offset[1] + 'rem'
         }"
     >
+        <slot name="item-before"/>
         <div :class="[props.item.icon]" class="mr-1 text-lg"/>
         <div>{{ props.item.title }}</div>
     </div>
@@ -20,15 +21,17 @@
 <script setup lang="ts">
 
 interface Props {
-    item: ViewItem,
-    offset?: [number, number]
+    item: ListItem,
+    offset: [number, number],
+    active?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   item: () => ({
-    icon: '',
+    value: '',
     title: ''
   }),
-  offset: () => [0, 0]
+  offset: () => [0, 0],
+  active: false
 })
 </script>

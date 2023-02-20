@@ -2,5 +2,5 @@
 </script>
 
 <template>
-  <process-designer />
+  <router-view />
 </template>

@@ -1,7 +1,9 @@
-interface ViewItem {
+interface ListItem {
     title: string
-    value?: string
-    children?: Item[]
+    value: string
     icon?: string
 }
 
+type TreeItem = Exclude<ListItem, 'offset'> & {
+    children: TreeItem[]
+}

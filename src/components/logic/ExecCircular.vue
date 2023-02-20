@@ -1,0 +1,3 @@
+<template>
+    loop
+</template>
