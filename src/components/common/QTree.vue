@@ -8,7 +8,7 @@
                 <div class="i-mdi-menu-down mr-1 text-lg" />
             </template>
         </list-item>
-        <tree-view :items="children" :depth="props.depth+1"/>
+        <q-tree :items="children" :depth="props.depth+1"/>
     </div>
 </template>
 

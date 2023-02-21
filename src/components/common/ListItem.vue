@@ -1,6 +1,6 @@
 <template>
 <div
-    class="pa-2 rd-1 text-sm opacity-80 flex items-center cursor-pointer"
+    class="select-none pa-2 rd-1 text-sm opacity-80 flex items-center cursor-pointer"
     :class="props.active?['bg-#dbeafe', 'hover-bg-#dbeafe']:['hover-bg-#f4f4f5']"
 >
     <div

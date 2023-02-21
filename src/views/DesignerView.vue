@@ -1,18 +1,30 @@
 <template>
-    <div class="flex h-100vh w-100vw">
+    <div class="flex h-100vh w-100%">
         <!-- nodes -->
-        <div class="b-gray-3 w-20% pa-4 box-border">
-            <tree-view :items="nodes"/>
-        </div>
+        <div class="w-2% pa-4 box-border b-r-1 b-r-solid b-gray-3 ">
 
-        <!-- drawing board -->
-        <div class="grow-1 pa-8 flex-col text-sm c-#334155 bg-#f2f3f8">
-            <process-designer />
         </div>
 
         <!-- task list -->
-        <div class="b-gray-3 w-20% flex-col pa-4 box-border">
-          <tree-view :items="tasks"/>
+        <div class="w-15% flex-col pa-4 box-border b-r-1 b-r-solid b-gray-3">
+          <q-tree :items="tasks"/>
+        </div>
+
+        <!-- nodes -->
+        <div class="w-15% pa-4 box-border">
+            <q-tree :items="nodes"/>
+        </div>
+
+        <!-- drawing board -->
+        <div class="grow-1 flex flex-col text-sm c-#334155 bg-#f2f3f8 overflow-hidden h-100%">
+          <q-tab class="shrink-0"/>
+          <div class="grow-1 overflow-auto">
+            <div class="flex justify-center py-4 ">
+              <div class="w-50%">
+                <process-designer />
+              </div>
+            </div>
+          </div>
         </div>
     </div>
 </template>

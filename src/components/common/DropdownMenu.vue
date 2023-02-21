@@ -4,7 +4,7 @@
             <div @click.stop="onClick" />
         </slot>
 
-        <div v-if="props.modelValue" ref="containerRef" class="absolute top-110% left-50% translate-x--50%" >
+        <div v-if="props.modelValue" ref="containerRef" class="z-1024 absolute top-110% left-50% translate-x--50%" >
             <div class="flex-column items-center justify-center pa-2 bg-white shadow rd-1">
                 <template v-if="props.items?.length">
                     <div
