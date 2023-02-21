@@ -20,7 +20,7 @@
           <q-tab class="shrink-0"/>
           <div class="grow-1 overflow-auto">
             <div class="flex justify-center py-4 ">
-              <div class="w-50%">
+              <div class="min-w-50%">
                 <process-designer />
               </div>
             </div>
