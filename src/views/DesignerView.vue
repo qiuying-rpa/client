@@ -7,7 +7,7 @@
 
         <!-- task list -->
         <div class="w-15% flex-col pa-4 box-border b-r-1 b-r-solid b-gray-3">
-          <q-tree :items="tasks"/>
+          <q-tree :items="tasks" v-model:open="tasksOpen"/>
         </div>
 
         <!-- nodes -->
@@ -34,7 +34,7 @@
 </style>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
 const nodes = reactive([
   {
@@ -109,4 +109,6 @@ const tasks = reactive([
     ]
   }
 ])
+
+const tasksOpen = ref([])
 </script>
