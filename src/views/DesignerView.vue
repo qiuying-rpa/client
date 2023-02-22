@@ -1,7 +1,7 @@
 <template>
     <div class="flex h-100vh w-100%">
         <!-- nodes -->
-        <div class="w-2% pa-4 box-border b-r-1 b-r-solid b-gray-3 ">
+        <div class="w-2.5% pa-4 box-border b-r-1 b-r-solid b-gray-3 ">
 
         </div>
 
@@ -55,9 +55,9 @@ const nodes = reactive([
     ]
   },
   {
-    title: '逻辑',
-    value: 'logic',
-    icon: 'i-mdi-gate-xor',
+    title: '执行逻辑',
+    value: 'exec-logic',
+    icon: 'i-mdi-arrow-decision-outline',
     children: [
       {
         title: '条件执行',
