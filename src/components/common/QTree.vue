@@ -4,15 +4,15 @@
         :key="index"
     >
         <template v-if="openLocal.includes(value)">
-            <list-item :item="{title, icon, value}" :offset="[props.depth*2.5, 0]" @click="toggleOpen(value)">
+            <list-item :item="{title, icon, value}" :offset="[props.depth*2.5, 0]" @click="children?.length && toggleOpen(value)">
                 <template #item-before v-if="children?.length">
                     <icon-button class="mr-1" icon="i-mdi-menu-down"/>
                 </template>
             </list-item>
-            <q-tree :items="children" :depth="props.depth+1" v-model:open="openLocal" />
+            <q-tree :items="children" :depth="props.depth+1" v-model:open="openLocal"/>
         </template>
         <template v-else>
-            <list-item :item="{title, icon, value}" :offset="[props.depth*2.5, 0]" @click="toggleOpen(value)">
+            <list-item :item="{title, icon, value}" :offset="[props.depth*2.5, 0]" @click="children?.length && toggleOpen(value)">
                 <template #item-before v-if="children?.length">
                     <icon-button class="mr-1" icon="i-mdi-menu-right"/>
                 </template>
@@ -47,7 +47,7 @@ function toggleOpen (value: ValueType) {
 
 watch(openLocal, (value) => {
   if (props.open instanceof Array) {
-    emits('update:open', value)
+    emits('update:open', props.open.concat(value.filter(v => !props.open?.includes(v))))
   }
 })
 </script>
