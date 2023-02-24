@@ -8,8 +8,9 @@
     <div class="flex">
       <div>
         <div
-          class="pt-4 relative before-absolute before-content-none before-w-0.4 before-h-4 before-bg-slate before-left-8 before-top-2 before-translate-y--50% after-absolute after-content-none after-w-100% after-h-0.4 after-bg-slate after-right-0 after-top-10 after-translate-y--50%">
+          class="flex items-center mt-4 relative before-absolute before-content-none before-w-0.4 before-h-4 before-bg-slate before-left-8 before-top--2 before-translate-y--50%">
           <plain-card class="reactive"> 则执行 </plain-card>
+          <div class="bg-slate grow-1 h-0.4" />
         </div>
         <div class="pl-8">
           <div
