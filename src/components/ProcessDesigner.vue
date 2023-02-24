@@ -4,9 +4,6 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped></style>
 
-</style>
-
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>

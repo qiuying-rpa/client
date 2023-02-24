@@ -1,37 +1,35 @@
 <template>
-    <div class="flex h-100vh w-100%">
-        <!-- nodes -->
-        <div class="w-2.5% pa-4 box-border b-r-1 b-r-solid b-gray-3 ">
+  <div class="flex w-100% overflow-hidden">
+    <!-- task list -->
+    <div class="w-15% flex-col pa-4 box-border b-r-1 b-r-solid b-gray-3">
+      <q-tree
+        :items="tasks"
+        v-model:open="tasksOpen"
+      />
+    </div>
 
-        </div>
+    <!-- nodes -->
+    <div class="w-15% pa-4 box-border">
+      <q-tree :items="nodes" />
+    </div>
 
-        <!-- task list -->
-        <div class="w-15% flex-col pa-4 box-border b-r-1 b-r-solid b-gray-3">
-          <q-tree :items="tasks" v-model:open="tasksOpen"/>
-        </div>
-
-        <!-- nodes -->
-        <div class="w-15% pa-4 box-border">
-            <q-tree :items="nodes"/>
-        </div>
-
-        <!-- drawing board -->
-        <div class="grow-1 flex flex-col text-sm c-#334155 bg-#f2f3f8 overflow-hidden h-100%">
-          <q-tab class="shrink-0"/>
-          <div class="grow-1 overflow-auto">
-            <div class="flex justify-center py-4 ">
-              <div class="min-w-50%">
-                <process-designer />
-              </div>
-            </div>
+    <!-- drawing board -->
+    <div
+      class="grow-1 flex flex-col text-sm c-#334155 bg-#f2f3f8 overflow-hidden h-100%"
+    >
+      <q-tab class="shrink-0" />
+      <div class="grow-1 overflow-auto">
+        <div class="flex justify-center py-4">
+          <div class="min-w-50%">
+            <process-designer />
           </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'

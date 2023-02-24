@@ -1,11 +1,7 @@
 <template>
   <div
     class="inline-block b-none outline-none py-0.5 px-1 rd-1 bg-#dbeafe c-#93c5fd fw-550 plain-value"
-    contenteditable
-    @input="onInput"
-    :placeholder="props.placeholder"
-    ref="inputRef"
-  />
+    contenteditable @input="onInput" :placeholder="props.placeholder" ref="inputRef" />
 </template>
 
 <style scoped>
@@ -19,8 +15,8 @@ div[contenteditable]:empty::before {
 import { onMounted, Ref, ref } from 'vue'
 
 interface Props {
-    placeholder?: string
-    modelValue: string
+  placeholder?: string
+  modelValue: string
 }
 
 const emits = defineEmits(['update:modelValue'])

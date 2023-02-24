@@ -1,27 +1,19 @@
 <template>
-    <div
-      class="inline-block py-0.5 px-1 rd-1 bg-#ffedd5 c-#fdba74 fw-550 str-value"
-    >
-      <div
-        contenteditable
-        @input="onInput"
-        :placeholder="props.placeholder"
-        ref="inputRef"
-        class="inline-block b-none outline-none"
-        @keydown.delete="onDelete"
-        />
-    </div>
-  </template>
+  <div class="inline-block py-0.5 px-1 rd-1 bg-#ffedd5 c-#fdba74 fw-550 str-value">
+    <div contenteditable @input="onInput" :placeholder="props.placeholder" ref="inputRef"
+      class="inline-block b-none outline-none" @keydown.delete="onDelete" />
+  </div>
+</template>
 
 <style scoped>
 div[contenteditable]:empty::before {
-    content: attr(placeholder);
-    cursor: text;
+  content: attr(placeholder);
+  cursor: text;
 }
 
 div.str-value::before,
 div.str-value::after {
-    content: '"';
+  content: '"';
 }
 </style>
 
@@ -29,8 +21,8 @@ div.str-value::after {
 import { onMounted, Ref, ref } from 'vue'
 
 interface Props {
-    placeholder?: string
-    modelValue: string
+  placeholder?: string
+  modelValue: string
 }
 
 const emits = defineEmits(['update:modelValue', 'degenerate'])
