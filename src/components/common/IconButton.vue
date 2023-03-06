@@ -1,15 +1,19 @@
 <template>
-  <div class="hover-bg-gray-2 rd-50% w-fit h-fit pa-0.5">
+  <div class="w-fit h-fit pa-0.5 cursor-pointer"
+    :class="[props.shape === 'circle' ? 'rd-50%' : 'rd-2'].concat(props.active ? ['bg-#dbeafe', 'hover-bg-#dbeafe'] : ['hover-bg-gray-2'])">
     <div class="text-lg" :class="[props.icon]" />
   </div>
 </template>
 
 <script setup lang="ts">
 interface Props {
-  icon: string
+  icon: string,
+  shape?: 'circle' | 'square',
+  active?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  icon: ''
+  shape: 'circle',
+  active: false
 })
 </script>

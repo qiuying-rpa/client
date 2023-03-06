@@ -1,7 +1,7 @@
 <template>
   <node-shell class="mt-4">
     <plain-card class="relative">
-      <div>循环执行，直到条件不成立</div>
+      <div>循环执行，直到...</div>
     </plain-card>
   </node-shell>
   <div>
