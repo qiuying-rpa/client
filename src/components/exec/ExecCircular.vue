@@ -1,7 +1,19 @@
 <template>
   <node-shell class="mt-4">
     <plain-card class="relative">
-      <div>循环执行，直到...</div>
+      <div>
+        循环执行，直到
+        <q-select class="inline-block" :items="[
+          {
+            title: '遍历所有元素',
+            value: 'iteration'
+          },
+          {
+            title: '条件不满足',
+            value: 'conditionFalsy'
+          }
+        ]" v-model="circularTarget" />
+      </div>
     </plain-card>
   </node-shell>
   <div>
@@ -21,3 +33,9 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const circularTarget = ref('')
+</script>

@@ -2,7 +2,19 @@
   <div>
     <node-shell>
       <plain-card class="relative">
-        <div>如果满足全部条件</div>
+        <div>
+          如果满足
+          <q-select class="inline-block" :items="[
+            {
+              title: '全部条件',
+              value: 'all'
+            },
+            {
+              title: '任意条件',
+              value: 'any'
+            }
+          ]" v-model="conditionLimit" />
+        </div>
       </plain-card>
     </node-shell>
     <div class="flex">
@@ -49,3 +61,9 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const conditionLimit = ref('')
+</script>

@@ -1,6 +1,11 @@
-interface ListItem {
+type ValueType = string | number | boolean
+
+interface SimpleItem {
   title: string
-  value: string | number
+  value: ValueType
+}
+
+type ListItem = SimpleItem & {
   icon?: string
   offset?: [number, number]
 }

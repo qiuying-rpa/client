@@ -1,29 +1,20 @@
 <template>
   <div v-for="{ title, icon, children, value }, index in props.items" :key="index">
-    <template v-if="openLocal.includes(value)">
-      <list-item :item="{ title, icon, value }" :offset="[props.depth * 2.5, 0]"
-        @click="children?.length && toggleOpen(value)">
-        <template #item-before v-if="children?.length">
-          <icon-button class="mr-1" icon="i-mdi-menu-down" />
-        </template>
-      </list-item>
+    <list-item :item="{ title, icon, value }" :offset="[props.depth * 2.5, 0]"
+      @click="children?.length && toggleOpen(value)">
+      <template #item-before v-if="children?.length">
+        <icon-button class="mr-1"
+          :icon="`i-mdi-menu-${openLocal.includes(value) ? 'down' : 'right'}`" />
+      </template>
+    </list-item>
+    <div v-if="children?.length && openLocal.includes(value)">
       <q-tree :items="children" :depth="props.depth + 1" v-model:open="openLocal" />
-    </template>
-    <template v-else>
-      <list-item :item="{ title, icon, value }" :offset="[props.depth * 2.5, 0]"
-        @click="children?.length && toggleOpen(value)">
-        <template #item-before v-if="children?.length">
-          <icon-button class="mr-1" icon="i-mdi-menu-right" />
-        </template>
-      </list-item>
-    </template>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-
-type ValueType = string | number
 
 interface Props {
   items: TreeItem[],
@@ -50,3 +41,16 @@ watch(openLocal, (value) => {
   }
 })
 </script>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: all .2s cubic-bezier(.4, 0, .2, 1);
+}
+
+.v-enter-from,
+.v-leave-to {
+  height: 0;
+  opacity: 0;
+}
+</style>
