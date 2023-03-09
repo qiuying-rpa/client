@@ -4,18 +4,35 @@
       <div @click.stop="toggleMenu" />
     </slot>
     <div
-      class="pa-2 bg-white shadow rd-1 z-1024 absolute top-5 translate-y-2 left-50% translate-x--50%"
+      class="pa-1 bg-white shadow rd-1 z-1024 absolute top-5 translate-y-2 left-50% translate-x--50%"
       v-if="props.modelValue">
-      <div v-if="props.items?.length">
-        <div class="whitespace-nowrap px-2 cursor-pointer c-gray-600 rd-1 select-none"
-          :class="(props.selected === i.value ? ['bg-#dbeafe', 'hover-bg-#dbeafe', 'fw-550'] : ['hover-bg-#f4f4f5']).concat([idx > 0 ? 'mt-1' : ''])"
-          v-for="(i, idx) in props.items" :key="idx" @click="onSelect(i.value)">
-          {{ i.title }}
+      <template v-if="props.items instanceof Array">
+        <div v-if="props.items?.length">
+          <div
+            :class="(props.selected === i.value ? ['bg-#dbeafe', 'hover-bg-#dbeafe', 'fw-550'] : ['hover-bg-#f4f4f5']).concat(idx > 0 ? 'mt-1' : '').concat(itemClasses)"
+            v-for="(i, idx) in props.items" :key="idx" @click="onSelect(i.value)">
+            {{ i.title }}
+          </div>
         </div>
-      </div>
-      <div v-else class="whitespace-nowrap text-xs select-none">
-        No Data
-      </div>
+        <div v-else class="whitespace-nowrap text-xs select-none">
+          No Data
+        </div>
+      </template>
+      <template v-else>
+        <template v-for="[title, items], index in Object.entries(props.items)" :key="index">
+          <q-divider :class="{ 'mt-1': index > 0 }" class="mb-1 whitespace-nowrap select-none"
+            v-if="title !== 'no-title'">
+            <div class="px-1  c-gray-400 scale-82 origin-center ">
+              {{ title }}
+            </div>
+          </q-divider>
+          <div
+            :class="(props.selected === i.value ? ['bg-#dbeafe', 'hover-bg-#dbeafe', 'fw-550'] : ['hover-bg-#f4f4f5']).concat(idx > 0 ? 'mt-1' : '').concat(itemClasses)"
+            v-for="(i, idx) in items" :key="idx" @click="onSelect(i.value)">
+            {{ i.title }}
+          </div>
+        </template>
+      </template>
     </div>
   </div>
 </template>
@@ -26,10 +43,11 @@ import { onMounted, ref } from 'vue'
 
 interface Props {
   modelValue: boolean
-  items: SimpleItem[]
+  items: SimpleItem[] | { [key: string]: SimpleItem[] }
   selected: ValueType
 }
 
+const itemClasses = 'whitespace-nowrap px-2 cursor-pointer c-gray-600 rd-1 select-none'
 const props = defineProps<Props>()
 const emits = defineEmits(['update:modelValue', 'update:selected'])
 

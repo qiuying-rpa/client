@@ -3,8 +3,10 @@
     <list-item :item="{ title, icon, value }" :offset="[props.depth * 2.5, 0]"
       @click="children?.length && toggleOpen(value)">
       <template #item-before v-if="children?.length">
-        <icon-button class="mr-1"
-          :icon="`i-mdi-menu-${openLocal.includes(value) ? 'down' : 'right'}`" />
+        <div class="mr-1">
+          <icon-button icon="i-mdi-menu-down" v-if="openLocal.includes(value)" />
+          <icon-button icon="i-mdi-menu-right" v-else />
+        </div>
       </template>
     </list-item>
     <div v-if="children?.length && openLocal.includes(value)">
@@ -17,8 +19,8 @@
 import { ref, watch } from 'vue'
 
 interface Props {
-  items: TreeItem[],
-  depth?: number,
+  items: TreeItem[]
+  depth?: number
   open?: ValueType[]
 }
 

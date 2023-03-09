@@ -8,7 +8,7 @@
 <script lang="ts" setup>
 
 interface Props {
-  items: ListItem[],
+  items: ListItem[]
   offset: [number, number]
 }
 

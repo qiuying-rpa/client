@@ -1,21 +1,25 @@
 <template>
-    <dropdown-menu
-      v-model="typeDropdown"
-      :items="uncertainTypes"
-      v-model:selected="inputType"
-      v-if="!inputType"
-    >
-        <template #activator="{attrs}">
-            <plain-value placeholder="某值" v-model="modelValue" v-bind="attrs"/>
-        </template>
-    </dropdown-menu>
-    <component :is="inputType" v-else v-model="modelValue" @degenerate="degenerate"/>
+  <dropdown-menu v-model="typeDropdown" :items="uncertainTypes" v-model:selected="inputType"
+    v-if="!inputType">
+    <template #activator="{ attrs }">
+      <plain-value placeholder="某值" v-bind="attrs" @click.stop :modelValue="props.modelValue"
+        @update:modelValue="emits('update:modelValue', $event)" />
+    </template>
+  </dropdown-menu>
+  <component :is="inputType" v-else :modelValue="props.modelValue"
+    @update:modelValue="emits('update:modelValue', $event)" @degenerate="degenerate" />
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watchEffect } from 'vue'
 
-const modelValue = ref('')
+interface Props {
+  modelValue: string
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits(['update:modelValue'])
+
 const inputType = ref('')
 const typeDropdown = ref(false)
 const uncertainTypes = ref([
@@ -29,11 +33,11 @@ const uncertainTypes = ref([
   }
 ])
 
-watch(modelValue, (val) => {
-  if (val === '"') {
+watchEffect(() => {
+  if (props.modelValue === '"') {
     inputType.value = 'str-value'
-    modelValue.value = ''
-  } else if (!!val && !inputType.value) {
+    emits('update:modelValue', '')
+  } else if (!!props.modelValue && !inputType.value) {
     inputType.value = 'plain-value'
   }
 })

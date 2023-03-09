@@ -2,9 +2,9 @@
   <div>
     <node-shell>
       <plain-card class="relative">
-        <div>
+        <div class="flex items-center">
           如果满足
-          <q-select class="inline-block" :items="[
+          <q-select class="inline-block mx-1" :items="[
             {
               title: '全部条件',
               value: 'all'
@@ -14,6 +14,13 @@
               value: 'any'
             }
           ]" v-model="conditionLimit" />
+          <dot-form>
+            <condition-item :modelValue="condition"
+              @update:modelValue="Object.assign(conditions[index], $event)"
+              v-for="condition, index in conditions" :key="index + refreshKey"
+              v-bind="index === 0 ? { onAdd: addCondition } : { onRemove: () => removeCondition(index) }"
+              :class="{ 'mt-2': index > 0 }" />
+          </dot-form>
         </div>
       </plain-card>
     </node-shell>
@@ -63,7 +70,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
+
+const blankCondition = {
+  left: '',
+  middle: '',
+  right: ''
+}
+
+type ConditionsItem = ConditionItem & {
+  onAdd?: () => void
+  onRemove?: (i: number) => void
+}
 
 const conditionLimit = ref('')
+const refreshKey = ref(new Date().getTime())
+const conditions = reactive<ConditionsItem[]>([{ ...blankCondition, onAdd: addCondition }])
+
+function addCondition () {
+  conditions.push({ ...blankCondition, onRemove: removeCondition })
+}
+
+function removeCondition (index: number) {
+  conditions.splice(index, 1)
+  refreshKey.value = new Date().getTime()
+}
 </script>

@@ -2,10 +2,7 @@
   <div class="flex w-100% overflow-hidden">
     <!-- task list -->
     <div class="w-15% flex-col pa-4 box-border b-r-1 b-r-solid b-gray-3">
-      <q-tree
-        :items="tasks"
-        v-model:open="tasksOpen"
-      />
+      <q-tree :items="tasks" v-model:open="tasksOpen" />
     </div>
 
     <!-- nodes -->
@@ -14,9 +11,7 @@
     </div>
 
     <!-- drawing board -->
-    <div
-      class="grow-1 flex flex-col text-sm c-#334155 bg-#f2f3f8 overflow-hidden h-100%"
-    >
+    <div class="grow-1 flex flex-col text-sm c-#334155 bg-#f2f3f8 overflow-hidden h-100%">
       <q-tab class="shrink-0" />
       <div class="grow-1 overflow-auto">
         <div class="flex justify-center py-4">
@@ -55,7 +50,7 @@ const nodes = reactive([
   {
     title: '执行逻辑',
     value: 'exec-logic',
-    icon: 'i-mdi-arrow-decision-outline',
+    icon: 'i-mdi-transit-connection-variant',
     children: [
       {
         title: '条件执行',

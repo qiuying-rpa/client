@@ -1,7 +1,7 @@
 <template>
   <plain-card>
     将
-    <plain-value v-model="variable" placeholder="变量名" class="mx-0.5" />
+    <plain-value v-model="variable" placeholder="变量名" class="mx-0.5 bg-#ffedd5 c-#fdba74" />
     赋值为
     <uncertain-value class="mx-0.5" />
   </plain-card>

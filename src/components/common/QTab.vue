@@ -15,7 +15,7 @@
 import { ref } from 'vue'
 
 interface Props {
-  orientation?: 'horizontal' | 'vertical',
+  orientation?: 'horizontal' | 'vertical'
   items: TabItem[]
 }
 

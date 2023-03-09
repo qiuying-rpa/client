@@ -1,5 +1,6 @@
 <template>
-  <div class="inline-block py-0.5 px-1 rd-1 bg-#ffedd5 c-#fdba74 fw-550 str-value">
+  <div
+    class="whitespace-nowrap inline-block py-0.5 px-1 rd-1 bg-emerald-100 c-emerald-500 fw-550 str-value">
     <div contenteditable @input="onInput" :placeholder="props.placeholder" ref="inputRef"
       class="inline-block b-none outline-none" @keydown.delete="onDelete" />
   </div>
@@ -22,7 +23,7 @@ import { onMounted, Ref, ref } from 'vue'
 
 interface Props {
   placeholder?: string
-  modelValue: string
+  modelValue?: string
 }
 
 const emits = defineEmits(['update:modelValue', 'degenerate'])

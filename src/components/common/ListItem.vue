@@ -16,8 +16,8 @@
 <script setup lang="ts">
 
 interface Props {
-  item: ListItem,
-  offset: [number, number],
+  item: ListItem
+  offset: [number, number]
   active?: boolean
 }
 

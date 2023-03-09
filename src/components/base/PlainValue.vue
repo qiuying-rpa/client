@@ -1,6 +1,6 @@
 <template>
   <div
-    class="inline-block b-none outline-none py-0.5 px-1 rd-1 bg-#dbeafe c-#93c5fd fw-550 plain-value"
+    class="whitespace-nowrap inline-block b-none outline-none py-0.5 px-1 rd-1 bg-#dbeafe c-#93c5fd fw-550 plain-value"
     contenteditable @input="onInput" :placeholder="props.placeholder" ref="inputRef" />
 </template>
 
@@ -28,13 +28,15 @@ const props = withDefaults(defineProps<Props>(), {
 const inputRef: Ref<HTMLElement | null> = ref(null)
 
 onMounted(() => {
-  inputRef.value!.focus()
   if (props.modelValue) {
+    inputRef.value!.focus()
     inputRef.value!.insertAdjacentText('afterbegin', props.modelValue)
 
     const range = getSelection()
     range?.selectAllChildren(inputRef.value!)
     range?.collapseToEnd()
+
+    inputRef.value!.blur()
   }
 })
 
