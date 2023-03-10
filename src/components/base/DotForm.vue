@@ -2,8 +2,7 @@
   <div class="relative overflow-visible" ref="containerRef">
     <slot name="activator" :attrs="{ onClick: toggleOverlay }">
       <div @click.stop.capture="toggleOverlay">
-        <icon-button icon="i-mdi-circle-outline text-xs" v-if="overlay" />
-        <icon-button icon="i-mdi-circle text-xs" v-else />
+        <icon-button :icon="`${overlay ? 'i-mdi-circle-outline' : 'i-mdi-circle'} text-xs`" />
       </div>
     </slot>
     <div

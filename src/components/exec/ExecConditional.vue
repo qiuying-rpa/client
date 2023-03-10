@@ -15,8 +15,7 @@
             }
           ]" v-model="conditionLimit" />
           <dot-form>
-            <condition-item :modelValue="condition"
-              @update:modelValue="Object.assign(conditions[index], $event)"
+            <condition-item :modelValue="condition" @update:modelValue="conditions[index] = $event"
               v-for="condition, index in conditions" :key="index + refreshKey"
               v-bind="index === 0 ? { onAdd: addCondition } : { onRemove: () => removeCondition(index) }"
               :class="{ 'mt-2': index > 0 }" />

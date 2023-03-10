@@ -1,17 +1,14 @@
 <template>
-  <dropdown-menu v-model="typeDropdown" :items="uncertainTypes" v-model:selected="inputType"
-    v-if="!inputType">
+  <dropdown-menu v-model="typeDropdown" :items="uncertainTypes" v-model:selected="selectedVariable">
     <template #activator="{ attrs }">
-      <plain-value placeholder="某值" v-bind="attrs" @click.stop :modelValue="props.modelValue"
-        @update:modelValue="emits('update:modelValue', $event)" />
+      <plain-value v-bind="attrs" placeholder="某值" :modelValue="props.modelValue"
+        @update:modelValue="updateModelValue" :class="inputColor" />
     </template>
   </dropdown-menu>
-  <component :is="inputType" v-else :modelValue="props.modelValue"
-    @update:modelValue="emits('update:modelValue', $event)" @degenerate="degenerate" />
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { onMounted, ref } from 'vue'
 
 interface Props {
   modelValue: string
@@ -20,7 +17,8 @@ interface Props {
 const props = defineProps<Props>()
 const emits = defineEmits(['update:modelValue'])
 
-const inputType = ref('')
+const inputColor = ref('bg-blue-100 c-blue-400')
+const selectedVariable = ref('')
 const typeDropdown = ref(false)
 const uncertainTypes = ref([
   {
@@ -33,16 +31,22 @@ const uncertainTypes = ref([
   }
 ])
 
-watchEffect(() => {
-  if (props.modelValue === '"') {
-    inputType.value = 'str-value'
-    emits('update:modelValue', '')
-  } else if (!!props.modelValue && !inputType.value) {
-    inputType.value = 'plain-value'
-  }
+onMounted(() => {
+  analyzeInputType(props.modelValue)
 })
 
-function degenerate () {
-  inputType.value = ''
+function analyzeInputType (input: string) {
+  let type = 'any'
+  if (input?.match(/^".*?"$/)) {
+    type = 'bg-c-emerald-100 c-emerald-400'
+  } else if (input?.match(/^\d+$/)) {
+    type = 'bg-orange-100 c-orange-400'
+  }
+  inputColor.value = type
+}
+
+function updateModelValue (value: string) {
+  analyzeInputType(value)
+  emits('update:modelValue', value)
 }
 </script>
