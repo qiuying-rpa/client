@@ -4,12 +4,9 @@ import { reactive } from 'vue'
 export const useDesignerStore = defineStore('designer', () => {
   const variables = reactive<{ [key: string]: string[] }>({})
 
-
-  function setVariables (processId: string, variable: string) {
+  function setVariable (processId: string, variable: string) {
     if (variables[processId]) {
-      if (variables[processId].includes(variable)) {
-        variables[processId] = variables[processId].filter(v => v !== variable)
-      } else {
+      if (!variables[processId].includes(variable)) {
         variables[processId].push(variable)
       }
     } else {
@@ -17,5 +14,11 @@ export const useDesignerStore = defineStore('designer', () => {
     }
   }
 
-  return { variables, setVariables }
+  function unsetVariable (processId: string, variable: string) {
+    if (variables[processId]) {
+      variables[processId] = variables[processId].filter(v => v !== variable)
+    }
+  }
+
+  return { variables, setVariable, unsetVariable }
 })

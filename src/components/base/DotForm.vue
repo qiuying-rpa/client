@@ -36,8 +36,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 
 const overlay = ref(false)
+const containerRef = ref(null)
+
+onClickOutside(containerRef, () => {
+  overlay.value && (overlay.value = false)
+})
 
 function toggleOverlay () {
   overlay.value = !overlay.value

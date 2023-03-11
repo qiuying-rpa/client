@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, Ref, ref } from 'vue'
+import { onMounted, Ref, ref, watch } from 'vue'
 
 interface Props {
   placeholder?: string
@@ -21,20 +21,34 @@ const props = withDefaults(defineProps<Props>(), {
 const inputRef: Ref<HTMLElement | null> = ref(null)
 
 onMounted(() => {
-  if (props.modelValue) {
-    inputRef.value!.focus()
-    inputRef.value!.insertAdjacentText('afterbegin', props.modelValue)
+  setInput(props.modelValue)
+})
 
-    const range = getSelection()
-    range?.selectAllChildren(inputRef.value!)
-    range?.collapseToEnd()
-
-    inputRef.value!.blur()
+watch(() => props.modelValue, (val) => {
+  if (val !== inputRef.value?.innerText) {
+    setInput(val)
+    cursorMoveLast()
   }
 })
 
 function onInput () {
   emits('update:modelValue', inputRef.value?.innerText || '')
+}
+
+function setInput (value: string) {
+  if (inputRef.value) {
+    inputRef.value.innerText = value || ''
+  }
+}
+
+function cursorMoveLast () {
+  if (inputRef.value) {
+    const range = getSelection()
+    range?.selectAllChildren(inputRef.value)
+    range?.collapseToEnd()
+
+    inputRef.value?.focus()
+  }
 }
 </script>
 
