@@ -1,6 +1,7 @@
 <template>
   <div v-for="{ title, icon, children, value }, index in props.items" :key="index">
     <list-item :item="{ title, icon, value }" :offset="[props.depth * 2.5, 0]"
+      :draggable="(props.draggable !== undefined && props.draggable !== false) ? 'true' : 'false'"
       @click="children?.length && toggleOpen(value)">
       <template #item-before v-if="children?.length">
         <div class="mr-1">
@@ -10,7 +11,8 @@
       </template>
     </list-item>
     <div v-if="children?.length && openLocal.includes(value)">
-      <q-tree :items="children" :depth="props.depth + 1" v-model:open="openLocal" />
+      <q-tree :items="children" :depth="props.depth + 1" v-model:open="openLocal"
+        :draggable="props.draggable" />
     </div>
   </div>
 </template>
@@ -22,6 +24,7 @@ interface Props {
   items: TreeItem[]
   depth?: number
   open?: ValueType[]
+  draggable?: any
 }
 
 const props = withDefaults(defineProps<Props>(), {

@@ -22,7 +22,7 @@
           </div>
           <div>
             <div class="h-7.5 flex items-center">
-              <str-value />
+              <plain-value />
             </div>
             <div class="h-7.5 flex items-center">
               <plain-value />

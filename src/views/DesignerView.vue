@@ -7,7 +7,7 @@
 
     <!-- nodes -->
     <div class="w-15% pa-4 box-border">
-      <q-tree :items="nodes" />
+      <q-tree :items="nodes" draggable />
     </div>
 
     <!-- drawing board -->

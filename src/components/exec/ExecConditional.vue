@@ -1,7 +1,7 @@
 <template>
   <div>
     <node-shell>
-      <plain-card class="relative">
+      <plain-card class="relative select-none">
         <div class="flex items-center">
           如果满足
           <q-select class="inline-block mx-1" :items="[
@@ -13,7 +13,7 @@
               title: '任意条件',
               value: 'any'
             }
-          ]" v-model="conditionLimit" />
+          ]" v-model="logic" />
           <dot-form>
             <condition-item :modelValue="condition" @update:modelValue="conditions[index] = $event"
               v-for="condition, index in conditions" :key="index + refreshKey"
@@ -27,41 +27,34 @@
       <div>
         <div
           class="flex items-center mt-4 relative before-absolute before-content-none before-w-0.4 before-h-4 before-bg-slate before-left-8 before-top--2 before-translate-y--50%">
-          <plain-card class="reactive"> 则执行 </plain-card>
-          <div class="bg-slate grow-1 h-0.4" />
+          <plain-card class="relative select-none" @mouseover="showButton('add')"
+            @mouseout="delayHideButton">
+            则执行
+            <div class="rd-50% absolute top-50% right--6 translate-y--50% bg-gray-3"
+              @mouseover="showButton('add')"
+              v-if="props.modelValue.noFalsy && actionButton === 'add'">
+              <icon-button icon="i-mdi-plus text-xs" @click="addFalsy" />
+            </div>
+          </plain-card>
+          <div class="bg-slate grow-1 h-0.4" v-if="!props.modelValue.noFalsy" />
         </div>
         <div class="pl-8">
-          <div
-            class="pl-8 py-4 relative before-content-none before-w-0.4 before-h-100% before-absolute before-left-0 before-bg-slate w-fit box-border before-top-0">
-            <node-shell>
-              <set-variable />
-            </node-shell>
-            <node-shell class="mt-4">
-              <print-log />
-            </node-shell>
-            <node-shell class="mt-4">
-              <print-log />
-            </node-shell>
-          </div>
+          <exec-sequential class="py-4 before-top-0" :modelValue="props.modelValue.truthy || []" />
         </div>
       </div>
-      <div>
+      <div v-if="!props.modelValue.noFalsy">
         <div class="pt-4">
-          <plain-card> 否则执行 </plain-card>
+          <plain-card class="relative select-none" @mouseover="showButton('remove')"
+            @mouseout="delayHideButton">
+            否则执行
+            <div class="rd-50% absolute top--1.5 right--1.5 bg-gray-3"
+              v-if="actionButton === 'remove'" @mouseover="showButton('remove')">
+              <icon-button icon="i-mdi-close text-xs" @click="removeFalsy" />
+            </div>
+          </plain-card>
         </div>
         <div class="pl-8">
-          <div
-            class="pl-8 py-4 relative before-content-none before-w-0.4 before-h-100% before-absolute before-left-0 before-bg-slate w-fit before-top-0">
-            <node-shell>
-              <set-variable />
-            </node-shell>
-            <node-shell class="mt-4">
-              <print-log />
-            </node-shell>
-            <node-shell class="mt-4">
-              <print-log />
-            </node-shell>
-          </div>
+          <exec-sequential class="py-4 before-top-0" :modelValue="props.modelValue.falsy || []" />
         </div>
       </div>
     </div>
@@ -69,7 +62,17 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
+
+interface Props {
+  modelValue?: {
+    logic: 'any' | 'all'
+    conditions: ConditionItem[]
+    truthy: ProcessNode[]
+    falsy: ProcessNode[]
+    noFalsy: boolean
+  }
+}
 
 const blankCondition = {
   left: '',
@@ -82,9 +85,28 @@ type ConditionsItem = ConditionItem & {
   onRemove?: (i: number) => void
 }
 
-const conditionLimit = ref('')
+const props = withDefaults(defineProps<Props>(), {
+  modelValue () {
+    return {
+      logic: 'all',
+      conditions: [],
+      truthy: [],
+      falsy: [],
+      noFalsy: false
+    }
+  }
+})
+const emits = defineEmits(['update:modelValue'])
+
 const refreshKey = ref(new Date().getTime())
+const actionButton = ref('')
+const hideButtonTimerHandle = ref<NodeJS.Timeout | null>(null)
 const conditions = reactive<ConditionsItem[]>([{ ...blankCondition, onAdd: addCondition }])
+
+const logic = computed({
+  set: (logic) => emits('update:modelValue', { ...props.modelValue, logic }),
+  get: () => props.modelValue.logic
+})
 
 function addCondition () {
   conditions.push({ ...blankCondition, onRemove: removeCondition })
@@ -93,5 +115,28 @@ function addCondition () {
 function removeCondition (index: number) {
   conditions.splice(index, 1)
   refreshKey.value = new Date().getTime()
+}
+
+function delayHideButton () {
+  hideButtonTimerHandle.value = setTimeout(() => {
+    actionButton.value = ''
+    hideButtonTimerHandle.value = null
+  }, 370)
+}
+
+function showButton (button: string) {
+  if (hideButtonTimerHandle.value) {
+    clearTimeout(hideButtonTimerHandle.value)
+    hideButtonTimerHandle.value = null
+  }
+  actionButton.value = button
+}
+
+function removeFalsy () {
+  emits('update:modelValue', { ...props.modelValue, noFalsy: true, falsy: [] })
+}
+
+function addFalsy () {
+  emits('update:modelValue', { ...props.modelValue, noFalsy: false, falsy: [] })
 }
 </script>
