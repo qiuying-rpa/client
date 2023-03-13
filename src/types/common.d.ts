@@ -11,7 +11,8 @@ type ListItem = SimpleItem & {
 }
 
 type TreeItem = Exclude<ListItem, 'offset'> & {
-  children: TreeItem[]
+  onDrag?: (event: DragEvent) => void
+  children?: TreeItem[]
 }
 
 type TabItem = Exclude<ListItem, 'offset'>

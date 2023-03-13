@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useDesignerStore } from '@/store/designer'
+import { useVariablesStore } from '@/store/designer'
 
 interface Props {
   modelValue: string
@@ -22,17 +22,12 @@ const emits = defineEmits(['update:modelValue'])
 
 const inputColor = ref('bg-blue-100 c-blue-400')
 const variableDropdown = ref(false)
-const variableCandidates = ref<SimpleItem[]>([])
-const { variables } = storeToRefs(useDesignerStore())
+const { variables } = storeToRefs(useVariablesStore())
+
+const variableCandidates = computed(() => variables.value.foo?.filter(v => v.startsWith(props.modelValue || '')).map(v => ({ title: v, value: v })) || [])
 
 onMounted(() => {
   analyzeInputType(props.modelValue)
-})
-
-watch(variableDropdown, (val) => {
-  if (val) {
-    updateVariableCandidates('')
-  }
 })
 
 function analyzeInputType (input: string) {
@@ -47,13 +42,8 @@ function analyzeInputType (input: string) {
   inputColor.value = type
 }
 
-function updateVariableCandidates (value: string) {
-  variableCandidates.value = variables.value.foo?.filter(v => v.startsWith(value || '')).map(v => ({ title: v, value: v })) || []
-}
-
 function updateModelValue (value: string) {
   analyzeInputType(value)
-  updateVariableCandidates(value)
   emits('update:modelValue', value)
 }
 </script>

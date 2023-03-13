@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
-export const useDesignerStore = defineStore('designer', () => {
+export const useVariablesStore = defineStore('variable', () => {
   const variables = reactive<{ [key: string]: string[] }>({})
 
   function setVariable (processId: string, variable: string) {
@@ -21,4 +21,24 @@ export const useDesignerStore = defineStore('designer', () => {
   }
 
   return { variables, setVariable, unsetVariable }
+})
+
+export const useDraggingStore = defineStore('dragging', () => {
+  const dragging = ref('')
+
+  function setDragging (draggingComponent: string) {
+    dragging.value = draggingComponent
+  }
+
+  return { dragging, setDragging }
+})
+
+export const useDraggingOverStore = defineStore('dragging-over', () => {
+  const draggingOver = ref('')
+
+  function setDraggingOver (draggingOverSequence: string) {
+    draggingOver.value = draggingOverSequence
+  }
+
+  return { draggingOver, setDraggingOver }
 })

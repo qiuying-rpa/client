@@ -1,6 +1,6 @@
 <template>
   <plain-card class="select-none">
-    打印<uncertain-value class="ml-0.5" v-mode="content" />
+    打印<uncertain-value class="ml-0.5" v-model="content" />
   </plain-card>
 </template>
 

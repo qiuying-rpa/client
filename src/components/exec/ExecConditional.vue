@@ -39,7 +39,8 @@
           <div class="bg-slate grow-1 h-0.4" v-if="!props.modelValue.noFalsy" />
         </div>
         <div class="pl-8">
-          <exec-sequential class="py-4 before-top-0" :modelValue="props.modelValue.truthy || []" />
+          <exec-sequential class="py-4 before-top-0" :modelValue="props.modelValue.truthy || []"
+            @update:modelValue="emits('update:modelValue', { ...props.modelValue, truthy: $event })" />
         </div>
       </div>
       <div v-if="!props.modelValue.noFalsy">
@@ -54,7 +55,8 @@
           </plain-card>
         </div>
         <div class="pl-8">
-          <exec-sequential class="py-4 before-top-0" :modelValue="props.modelValue.falsy || []" />
+          <exec-sequential class="py-4 before-top-0" :modelValue="props.modelValue.falsy || []"
+            @update:modelValue="emits('update:modelValue', { ...props.modelValue, falsy: $event })" />
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
-import { useDesignerStore } from '@/store/designer'
+import { useVariablesStore } from '@/store/designer'
 
 interface Props {
   modelValue?: {
@@ -35,7 +35,7 @@ const variableValue = computed({
   get: () => props.modelValue.variableValue
 })
 
-const { setVariable, unsetVariable } = useDesignerStore()
+const { setVariable, unsetVariable } = useVariablesStore()
 
 watch(variable, (val, oldVal) => {
   unsetVariable('foo', oldVal)

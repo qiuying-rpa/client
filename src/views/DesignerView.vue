@@ -7,7 +7,7 @@
 
     <!-- nodes -->
     <div class="w-15% pa-4 box-border">
-      <q-tree :items="nodes" draggable />
+      <q-tree :items="nodes" />
     </div>
 
     <!-- drawing board -->
@@ -27,7 +27,10 @@
 <style scoped></style>
 
 <script setup lang="ts">
+import { useDraggingStore } from '@/store/designer'
 import { reactive, ref } from 'vue'
+
+const { setDragging } = useDraggingStore()
 
 const nodes = reactive([
   {
@@ -38,12 +41,14 @@ const nodes = reactive([
       {
         title: '设置变量',
         value: 'set-variable',
-        icon: 'i-mdi-variable'
+        icon: 'i-mdi-variable',
+        onDrag: genDragHandler('set-variable')
       },
       {
         title: '打印日志',
         value: 'print-log',
-        icon: 'i-mdi-file-document-outline'
+        icon: 'i-mdi-file-document-outline',
+        onDrag: genDragHandler('print-log')
       }
     ]
   },
@@ -55,12 +60,14 @@ const nodes = reactive([
       {
         title: '条件执行',
         value: 'exec-conditional',
-        icon: 'i-mdi-less-than-or-equal'
+        icon: 'i-mdi-less-than-or-equal',
+        onDrag: genDragHandler('exec-conditional')
       },
       {
         title: '循环执行',
         value: 'exec-circular',
-        icon: 'i-mdi-sync'
+        icon: 'i-mdi-sync',
+        onDrag: genDragHandler('exec-circular')
       }
     ]
   }
@@ -104,4 +111,8 @@ const tasks = reactive([
 ])
 
 const tasksOpen = ref([])
+
+function genDragHandler (component: string) {
+  return () => setDragging(component)
+}
 </script>

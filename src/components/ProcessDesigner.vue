@@ -7,10 +7,10 @@
 <style scoped></style>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 import { uuid } from '@/utils/common'
 
-const nodes = reactive([
+const nodes = ref([
   {
     id: uuid(),
     is: 'set-variable',
