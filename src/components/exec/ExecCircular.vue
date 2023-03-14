@@ -1,41 +1,112 @@
 <template>
   <node-shell class="mt-4">
-    <plain-card class="relative" @remove="$attrs.onRemove">
-      <div>
+    <plain-card class="relative select-none" @remove="$attrs.onRemove">
+      <div class="flex items-center">
         循环执行，直到
-        <q-select class="inline-block" :items="[
+        <q-select class="inline-block mx-1" :items="[
           {
             title: '遍历所有元素',
             value: 'iteration'
           },
           {
-            title: '条件不满足',
-            value: 'conditionFalsy'
+            title: '所有条件不满足',
+            value: 'allConditionFalsy'
+          },
+          {
+            title: '任意条件不满足',
+            value: 'anyConditionFalsy'
           }
-        ]" v-model="circularTarget" />
+        ]" v-model="circulationType" />
+        <dot-form>
+          <kwargs-form :modelValue="[
+            {
+              label: '访问目标',
+              argName: 'target',
+              value: ''
+            },
+            {
+              label: '嵌套',
+              argName: 'nested',
+              value: [
+                {
+                  label: '索引',
+                  argName: 'index',
+                  value: ''
+                },
+                {
+                  label: '索引',
+                  argName: 'index',
+                  value: ''
+                },
+                {
+                  label: '数组',
+                  argName: 'array',
+                  value: [
+                    [
+                      {
+                        label: '选择',
+                        argName: 'select',
+                        value: '',
+                        options: [
+                          { title: 'foo', value: 'bar' }
+                        ]
+                      },
+                      {
+                        label: '选择',
+                        argName: 'select',
+                        value: '',
+                        options: [
+                          { title: 'foo', value: 'bar' }
+                        ]
+                      }
+                    ],
+                    [
+                      {
+                        label: '选择',
+                        argName: 'select',
+                        value: '',
+                        options: [
+                          { title: 'foo', value: 'bar' }
+                        ]
+                      },
+                      {
+                        label: '选择',
+                        argName: 'select',
+                        value: ''
+                      }
+                    ]
+                  ]
+                }
+              ]
+            },
+          ]" />
+        </dot-form>
       </div>
     </plain-card>
   </node-shell>
   <div>
     <div class="pl-8">
-      <div
-        class="pl-8 py-4 relative before-content-none before-w-0.4 before-h-100% before-absolute before-left-0 before-bg-slate w-fit box-border before-top-0">
-        <node-shell>
-          <set-variable />
-        </node-shell>
-        <node-shell class="mt-4">
-          <print-log />
-        </node-shell>
-        <node-shell class="mt-4">
-          <print-log />
-        </node-shell>
-      </div>
+      <exec-sequential class="py-4 before-top-0" :modelValue="props.modelValue?.circulationBody || []"
+        @update:modelValue="emits('update:modelValue', { ...props.modelValue, circulationBody: $event })" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
 
-const circularTarget = ref('')
+interface Props {
+  modelValue?: {
+    circulationType: string
+    circulationBody: ProcessNode[]
+  }
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits(['update:modelValue'])
+
+const circulationType = computed({
+  set: (circulationType) => emits('update:modelValue', { ...props.modelValue, circulationType }),
+  get: () => props.modelValue?.circulationType
+})
 </script>

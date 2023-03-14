@@ -14,8 +14,8 @@
 import { ref } from 'vue'
 
 interface Props {
-  dashed: any,
-  transparent: any,
+  dashed?: any,
+  transparent?: any,
 }
 
 defineProps<Props>()
