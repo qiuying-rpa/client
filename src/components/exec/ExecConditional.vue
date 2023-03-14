@@ -1,7 +1,7 @@
 <template>
   <div>
     <node-shell>
-      <plain-card class="relative select-none">
+      <plain-card class="relative select-none" @remove="$attrs.onRemove">
         <div class="flex items-center">
           如果满足
           <q-select class="inline-block mx-1" :items="[
@@ -27,12 +27,11 @@
       <div>
         <div
           class="flex items-center mt-4 relative before-absolute before-content-none before-w-0.4 before-h-4 before-bg-slate before-left-8 before-top--2 before-translate-y--50%">
-          <plain-card class="relative select-none" @mouseover="showButton('add')"
+          <plain-card class="relative select-none" @mouseover="showButton"
             @mouseout="delayHideButton">
             则执行
             <div class="rd-50% absolute top-50% right--6 translate-y--50% bg-gray-3"
-              @mouseover="showButton('add')"
-              v-if="props.modelValue.noFalsy && actionButton === 'add'">
+              @mouseover="showButton" v-if="props.modelValue.noFalsy && addFalsyButton">
               <icon-button icon="i-mdi-plus text-xs" @click="addFalsy" />
             </div>
           </plain-card>
@@ -45,13 +44,8 @@
       </div>
       <div v-if="!props.modelValue.noFalsy">
         <div class="pt-4">
-          <plain-card class="relative select-none" @mouseover="showButton('remove')"
-            @mouseout="delayHideButton">
+          <plain-card class="relative select-none" @remove="removeFalsy">
             否则执行
-            <div class="rd-50% absolute top--1.5 right--1.5 bg-gray-3"
-              v-if="actionButton === 'remove'" @mouseover="showButton('remove')">
-              <icon-button icon="i-mdi-close text-xs" @click="removeFalsy" />
-            </div>
           </plain-card>
         </div>
         <div class="pl-8">
@@ -101,7 +95,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emits = defineEmits(['update:modelValue'])
 
 const refreshKey = ref(new Date().getTime())
-const actionButton = ref('')
+const addFalsyButton = ref(false)
 const hideButtonTimerHandle = ref<NodeJS.Timeout | null>(null)
 const conditions = reactive<ConditionsItem[]>([{ ...blankCondition, onAdd: addCondition }])
 
@@ -121,17 +115,17 @@ function removeCondition (index: number) {
 
 function delayHideButton () {
   hideButtonTimerHandle.value = setTimeout(() => {
-    actionButton.value = ''
+    addFalsyButton.value = false
     hideButtonTimerHandle.value = null
   }, 370)
 }
 
-function showButton (button: string) {
+function showButton () {
   if (hideButtonTimerHandle.value) {
     clearTimeout(hideButtonTimerHandle.value)
     hideButtonTimerHandle.value = null
   }
-  actionButton.value = button
+  addFalsyButton.value = true
 }
 
 function removeFalsy () {

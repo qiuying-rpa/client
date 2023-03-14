@@ -1,6 +1,6 @@
 <template>
   <node-shell class="mt-4">
-    <plain-card class="relative">
+    <plain-card class="relative" @remove="$attrs.onRemove">
       <div>
         循环执行，直到
         <q-select class="inline-block" :items="[

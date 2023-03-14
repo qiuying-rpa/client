@@ -9,7 +9,7 @@
           :class="{ 'mt-4': index > 0 }">
           <component :modelValue="modelValue" :is="is"
             @update:modelValue="updateNodeModelValue(index, $event)"
-            :class="{ 'mt-4': index > 0 && is.startsWith('exec') }" />
+            :class="{ 'mt-4': index > 0 && is.startsWith('exec') }" @remove="removeNode(index)" />
         </component>
       </template>
     </template>
@@ -44,9 +44,9 @@ watch(draggingOver, (val) => {
   }
 })
 
-function updateNodeModelValue (index: number, modelValue: ProcessNodeModelValue) {
+function updateNodeModelValue (targetIndex: number, modelValue: ProcessNodeModelValue) {
   const newModelValue = deepCopy(props.modelValue)
-  newModelValue[index].modelValue = modelValue
+  newModelValue[targetIndex].modelValue = modelValue
   emits('update:modelValue', newModelValue)
 }
 
@@ -57,6 +57,12 @@ function insertNode (targetIndex: number) {
     is: dragging.value,
     modelValue: {}
   })
+  emits('update:modelValue', nodesNew)
+}
+
+function removeNode (targetIndex: number) {
+  const nodesNew = deepCopy(props.modelValue)
+  nodesNew.splice(targetIndex, 1)
   emits('update:modelValue', nodesNew)
 }
 
