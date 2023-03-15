@@ -18,68 +18,29 @@
           }
         ]" v-model="circulationType" />
         <dot-form>
-          <kwargs-form :modelValue="[
+          <kwargs-form v-if="circulationType === 'iteration'" :modelValue="[
             {
               label: '访问目标',
               argName: 'target',
               value: ''
             },
             {
-              label: '嵌套',
-              argName: 'nested',
-              value: [
-                {
-                  label: '索引',
-                  argName: 'index',
-                  value: ''
-                },
-                {
-                  label: '索引',
-                  argName: 'index',
-                  value: ''
-                },
-                {
-                  label: '数组',
-                  argName: 'array',
-                  value: [
-                    [
-                      {
-                        label: '选择',
-                        argName: 'select',
-                        value: '',
-                        options: [
-                          { title: 'foo', value: 'bar' }
-                        ]
-                      },
-                      {
-                        label: '选择',
-                        argName: 'select',
-                        value: '',
-                        options: [
-                          { title: 'foo', value: 'bar' }
-                        ]
-                      }
-                    ],
-                    [
-                      {
-                        label: '选择',
-                        argName: 'select',
-                        value: '',
-                        options: [
-                          { title: 'foo', value: 'bar' }
-                        ]
-                      },
-                      {
-                        label: '选择',
-                        argName: 'select',
-                        value: ''
-                      }
-                    ]
-                  ]
-                }
-              ]
+              label: '每次得到元素',
+              argName: 'item',
+              value: ''
+            },
+            {
+              label: '元素索引',
+              argName: 'index',
+              value: ''
             },
           ]" />
+          <template v-else>
+            <condition-item :modelValue="condition" @update:modelValue="conditions[index] = $event"
+              v-for="condition, index in conditions" :key="index + refreshKey"
+              v-bind="index === 0 ? { onAdd: addCondition } : { onRemove: () => removeCondition(index) }"
+              :class="{ 'mt-2': index > 0 }" />
+          </template>
         </dot-form>
       </div>
     </plain-card>
@@ -93,20 +54,57 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 
 interface Props {
   modelValue?: {
     circulationType: string
     circulationBody: ProcessNode[]
+    circulationConditions: ConditionItem[]
   }
 }
 
-const props = defineProps<Props>()
+const blankCondition = {
+  left: '',
+  middle: '',
+  right: ''
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  modelValue: () => ({
+    circulationType: 'iteration',
+    circulationConditions: [],
+    circulationBody: []
+  })
+})
 const emits = defineEmits(['update:modelValue'])
+
+const conditions = reactive<ConditionsItem[]>([{ ...blankCondition, onAdd: addCondition }])
+
+watch(conditions, (circulationConditions) => {
+  emits('update:modelValue', { ...props.modelValue, circulationConditions })
+})
+
+watch(() => props.modelValue.circulationType, (val) => {
+  if (val === 'iteration') {
+    conditions.splice(0)
+    conditions.push({ ...blankCondition, onAdd: addCondition })
+  }
+})
+
+function addCondition () {
+  conditions.push({ ...blankCondition, onRemove: removeCondition })
+}
+
+function removeCondition (index: number) {
+  conditions.splice(index, 1)
+  refreshKey.value = new Date().getTime()
+}
+
+const refreshKey = ref(new Date().getTime())
 
 const circulationType = computed({
   set: (circulationType) => emits('update:modelValue', { ...props.modelValue, circulationType }),
-  get: () => props.modelValue?.circulationType
+  get: () => props.modelValue.circulationType
 })
 </script>

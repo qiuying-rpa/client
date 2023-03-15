@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, watch } from 'vue'
 
 interface Props {
   modelValue?: {
@@ -74,11 +74,6 @@ const blankCondition = {
   left: '',
   middle: '',
   right: ''
-}
-
-type ConditionsItem = ConditionItem & {
-  onAdd?: () => void
-  onRemove?: (i: number) => void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -102,6 +97,10 @@ const conditions = reactive<ConditionsItem[]>([{ ...blankCondition, onAdd: addCo
 const conditionType = computed({
   set: (conditionType) => emits('update:modelValue', { ...props.modelValue, conditionType }),
   get: () => props.modelValue.conditionType
+})
+
+watch(conditions, (conditions) => {
+  emits('update:modelValue', { ...props.modelValue, conditions })
 })
 
 function addCondition () {

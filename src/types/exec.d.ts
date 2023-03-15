@@ -4,6 +4,11 @@ interface ConditionItem {
   right: string
 }
 
+type ConditionsItem = ConditionItem & {
+  onAdd?: () => void
+  onRemove?: (i: number) => void
+}
+
 type ProcessNodeModelValue = { [key: string]: unknown }
 
 interface ProcessNode {
