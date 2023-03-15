@@ -1,5 +1,7 @@
 type ValueType = string | number | boolean
 
+type ObjectValue = { [key: string]: unknown }
+
 interface SimpleItem {
   title: string
   value: ValueType

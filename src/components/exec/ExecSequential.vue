@@ -3,11 +3,11 @@
     class="pl-8 relative before-content-none before-w-0.4 before-h-100% before-absolute before-left-0 before-bg-slate w-fit"
     @dragover.stop="matchInsertPosition">
     <template v-if="props.modelValue.length">
-      <template v-for="{ is, id, modelValue }, index in props.modelValue" :key="id">
+      <template v-for="{ is, id, modelValue, title }, index in props.modelValue" :key="id">
         <hint-node v-if="is === 'hint-node'" :class="{ 'mt-4': index > 0 }" />
         <component v-else :is="is.startsWith('exec') ? 'div' : 'node-shell'" :id="id"
           :class="{ 'mt-4': index > 0 }">
-          <component :modelValue="modelValue" :is="is"
+          <component :modelValue="modelValue" :is="is" :title="title"
             @update:modelValue="updateNodeModelValue(index, $event)"
             :class="{ 'mt-4': index > 0 && is.startsWith('exec') }" @remove="removeNode(index)" />
         </component>

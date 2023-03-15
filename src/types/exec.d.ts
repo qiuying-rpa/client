@@ -9,10 +9,11 @@ type ConditionsItem = ConditionItem & {
   onRemove?: (i: number) => void
 }
 
-type ProcessNodeModelValue = { [key: string]: unknown }
+type ProcessNodeModelValue = ObjectValue
 
 interface ProcessNode {
   id: string
   is: string
+  title?: string
   modelValue?: ProcessNodeModelValue
 }

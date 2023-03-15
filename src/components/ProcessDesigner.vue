@@ -30,6 +30,18 @@ const nodes = ref([
     id: uuid(),
     is: 'exec-circular',
     modelValue: {}
+  },
+  {
+    id: uuid(),
+    is: 'sun-wukong',
+    title: '测试',
+    modelValue: [
+      {
+        label: '参数',
+        argName: 'test',
+        value: ''
+      }
+    ]
   }
 ])
 </script>
