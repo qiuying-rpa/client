@@ -34,12 +34,37 @@ const nodes = ref([
   {
     id: uuid(),
     is: 'sun-wukong',
-    title: '测试',
+    title: '打开已有 Excel',
     modelValue: [
       {
-        label: '参数',
-        argName: 'test',
-        value: ''
+        label: 'Excel 文件路径',
+        argName: 'file_path',
+        value: '""'
+      },
+      {
+        label: 'Sheet 名称',
+        argName: 'sheet_name',
+        value: '"1"'
+      },
+      {
+        label: '密码',
+        argName: 'password',
+        value: 'None'
+      },
+      {
+        label: '是否可视化',
+        argName: 'visible',
+        value: 'True',
+        options: [
+          {
+            title: '是',
+            value: 'True'
+          },
+          {
+            title: '否',
+            value: 'False'
+          }
+        ]
       }
     ]
   }

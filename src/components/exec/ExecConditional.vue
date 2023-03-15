@@ -13,7 +13,7 @@
               title: '任意条件',
               value: 'any'
             }
-          ]" v-model="conditionType" />
+          ]" v-model="type" />
           <dot-form>
             <condition-item :modelValue="condition" @update:modelValue="conditions[index] = $event"
               v-for="condition, index in conditions" :key="index + refreshKey"
@@ -62,7 +62,7 @@ import { reactive, ref, computed, watch } from 'vue'
 
 interface Props {
   modelValue?: {
-    conditionType: 'any' | 'all'
+    type: 'any' | 'all'
     conditions: ConditionItem[]
     truthy: ProcessNode[]
     falsy: ProcessNode[]
@@ -79,7 +79,7 @@ const blankCondition = {
 const props = withDefaults(defineProps<Props>(), {
   modelValue () {
     return {
-      conditionType: 'all',
+      type: 'all',
       conditions: [],
       truthy: [],
       falsy: [],
@@ -94,9 +94,9 @@ const addFalsyButton = ref(false)
 const hideButtonTimerHandle = ref<NodeJS.Timeout | null>(null)
 const conditions = reactive<ConditionsItem[]>([{ ...blankCondition, onAdd: addCondition }])
 
-const conditionType = computed({
-  set: (conditionType) => emits('update:modelValue', { ...props.modelValue, conditionType }),
-  get: () => props.modelValue.conditionType
+const type = computed({
+  set: (type) => emits('update:modelValue', { ...props.modelValue, type }),
+  get: () => props.modelValue.type
 })
 
 watch(conditions, (conditions) => {

@@ -16,25 +16,9 @@
             title: '任意条件不满足',
             value: 'anyConditionFalsy'
           }
-        ]" v-model="circulationType" />
+        ]" v-model="type" />
         <dot-form>
-          <kwargs-form v-if="circulationType === 'iteration'" :modelValue="[
-            {
-              label: '访问目标',
-              argName: 'target',
-              value: ''
-            },
-            {
-              label: '每次得到元素',
-              argName: 'item',
-              value: ''
-            },
-            {
-              label: '元素索引',
-              argName: 'index',
-              value: ''
-            },
-          ]" />
+          <kwargs-form v-if="type === 'iteration'" v-model="iterationConf" />
           <template v-else>
             <condition-item :modelValue="condition" @update:modelValue="conditions[index] = $event"
               v-for="condition, index in conditions" :key="index + refreshKey"
@@ -47,8 +31,8 @@
   </node-shell>
   <div>
     <div class="pl-8">
-      <exec-sequential class="py-4 before-top-0" :modelValue="props.modelValue?.circulationBody || []"
-        @update:modelValue="emits('update:modelValue', { ...props.modelValue, circulationBody: $event })" />
+      <exec-sequential class="py-4 before-top-0" :modelValue="props.modelValue?.execution || []"
+        @update:modelValue="emits('update:modelValue', { ...props.modelValue, execution: $event })" />
     </div>
   </div>
 </template>
@@ -58,9 +42,10 @@ import { computed, reactive, ref, watch } from 'vue'
 
 interface Props {
   modelValue?: {
-    circulationType: string
-    circulationBody: ProcessNode[]
-    circulationConditions: ConditionItem[]
+    type: string
+    iterationConf?: KwargsFormModelValue[]
+    conditions?: ConditionItem[]
+    execution: ProcessNode[]
   }
 }
 
@@ -72,20 +57,40 @@ const blankCondition = {
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: () => ({
-    circulationType: 'iteration',
-    circulationConditions: [],
-    circulationBody: []
+    type: 'iteration',
+    execution: []
   })
 })
 const emits = defineEmits(['update:modelValue'])
 
 const conditions = reactive<ConditionsItem[]>([{ ...blankCondition, onAdd: addCondition }])
+const iterationConf = reactive<KwargsFormModelValue[]>([
+  {
+    label: '访问目标',
+    argName: 'target',
+    value: ''
+  },
+  {
+    label: '每次得到元素',
+    argName: 'item',
+    value: ''
+  },
+  {
+    label: '元素索引',
+    argName: 'index',
+    value: ''
+  }
+])
 
-watch(conditions, (circulationConditions) => {
-  emits('update:modelValue', { ...props.modelValue, circulationConditions })
+watch(conditions, (conditions) => {
+  emits('update:modelValue', { ...props.modelValue, conditions })
 })
 
-watch(() => props.modelValue.circulationType, (val) => {
+watch(iterationConf, (iterationConf) => {
+  emits('update:modelValue', { ...props.modelValue, iterationConf })
+})
+
+watch(() => props.modelValue.type, (val) => {
   if (val === 'iteration') {
     conditions.splice(0)
     conditions.push({ ...blankCondition, onAdd: addCondition })
@@ -103,8 +108,8 @@ function removeCondition (index: number) {
 
 const refreshKey = ref(new Date().getTime())
 
-const circulationType = computed({
-  set: (circulationType) => emits('update:modelValue', { ...props.modelValue, circulationType }),
-  get: () => props.modelValue.circulationType
+const type = computed({
+  set: (type) => emits('update:modelValue', { ...props.modelValue, type }),
+  get: () => props.modelValue.type
 })
 </script>

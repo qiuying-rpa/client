@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-100% w-100%">
-    <div class="shrink-0 bg-white b-r-1 b-gray-3 b-r-solid pa-2 flex flex-col items-center">
+    <!-- <div class="shrink-0 bg-white b-r-1 b-gray-3 b-r-solid pa-2 flex flex-col items-center">
       <img src="qiuying.svg" width="24" class="grow-0 cursor-pointer mb-3" />
       <q-tab orientation="vertical" :items="[
         {
@@ -14,7 +14,7 @@
           icon: 'i-mdi-pencil-ruler'
         }
       ]" />
-    </div>
+    </div> -->
     <router-view />
   </div>
 </template>

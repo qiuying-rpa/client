@@ -12,7 +12,14 @@
 
     <!-- drawing board -->
     <div class="grow-1 flex flex-col text-sm c-#334155 bg-#f2f3f8 overflow-hidden h-100%">
-      <q-tab class="shrink-0" />
+      <div class="w-100% bg-light-300 pa-2 box-border justify-between flex items-center">
+        <!-- <span>未命名</span> -->
+        <plain-value class="bg-gray-100 c-gray-400" />
+        <div class="flex items-center">
+          <icon-button icon="i-mdi-play c-green-600" />
+          <icon-button icon="i-mdi-content-save c-gray-500" class="ml-2" />
+        </div>
+      </div>
       <div class="grow-1 overflow-auto">
         <div class="flex justify-center py-4">
           <div class="min-w-50%">
@@ -73,40 +80,53 @@ const nodes = reactive([
   }
 ])
 
+// const tasks = reactive([
+//   {
+//     title: '我的分类一',
+//     value: 'category-1',
+//     icon: 'i-mdi-archive-outline',
+//     children: [
+//       {
+//         title: '流程 1',
+//         value: 'process-1',
+//         icon: 'i-mdi-file-tree'
+//       },
+//       {
+//         title: '流程 2',
+//         value: 'process-2',
+//         icon: 'i-mdi-file-tree'
+//       }
+//     ]
+//   },
+//   {
+//     title: '我的分类二',
+//     value: 'category-2',
+//     icon: 'i-mdi-archive-outline',
+//     children: [
+//       {
+//         title: '流程 3',
+//         value: 'process-3',
+//         icon: 'i-mdi-file-tree'
+//       },
+//       {
+//         title: '流程 4',
+//         value: 'process-4',
+//         icon: 'i-mdi-file-tree'
+//       }
+//     ]
+//   }
+// ])
+
 const tasks = reactive([
   {
-    title: '我的分类一',
-    value: 'category-1',
-    icon: 'i-mdi-archive-outline',
-    children: [
-      {
-        title: '流程 1',
-        value: 'process-1',
-        icon: 'i-mdi-file-tree'
-      },
-      {
-        title: '流程 2',
-        value: 'process-2',
-        icon: 'i-mdi-file-tree'
-      }
-    ]
+    title: '流程 1',
+    value: 'process-1',
+    icon: 'i-mdi-file-tree'
   },
   {
-    title: '我的分类二',
-    value: 'category-2',
-    icon: 'i-mdi-archive-outline',
-    children: [
-      {
-        title: '流程 3',
-        value: 'process-3',
-        icon: 'i-mdi-file-tree'
-      },
-      {
-        title: '流程 4',
-        value: 'process-4',
-        icon: 'i-mdi-file-tree'
-      }
-    ]
+    title: '流程 2',
+    value: 'process-2',
+    icon: 'i-mdi-file-tree'
   }
 ])
 
