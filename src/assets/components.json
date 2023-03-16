@@ -1,0 +1,1130 @@
+{
+  "excel.open_excel": {
+    "title": "打开已有 Excel",
+    "desc": "启动已经存在的 Excel",
+    "kwargs": [
+      {
+        "label": "Excel 文件路径",
+        "argName": "file_path",
+        "value": ""
+      },
+      {
+        "label": "sheet 名称",
+        "argName": "sheet_name",
+        "value": "1"
+      },
+      {
+        "label": "密码",
+        "argName": "password",
+        "value": "None"
+      },
+      {
+        "label": "是否可视化",
+        "argName": "visible",
+        "value": "True",
+        "options": [
+          {
+            "title": "是",
+            "value": "True"
+          },
+          {
+            "title": "否",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "excel_obj"
+      }
+    ]
+  },
+  "excel.create_excel": {
+    "title": "新建 Excel",
+    "desc": "创建新的 Excel 文件",
+    "kwargs": [
+      {
+        "label": "Excel 文件路径",
+        "argName": "file_path",
+        "value": ""
+      },
+      {
+        "label": "是否可视化",
+        "argName": "visible",
+        "value": "True",
+        "options": [
+          {
+            "title": "是",
+            "value": "True"
+          },
+          {
+            "title": "否",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "excel_obj"
+      }
+    ]
+  },
+  "excel.get_worksheet_name": {
+    "title": "获取所有工作表名称",
+    "desc": "获取所有sheet名称",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "sheet_name_list"
+      }
+    ]
+  },
+  "excel.switch_worksheet": {
+    "title": "切换工作表",
+    "desc": "切换 sheet 页",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "工作表",
+        "argName": "sheet_name",
+        "value": ""
+      }
+    ]
+  },
+  "excel.create_worksheet": {
+    "title": "新建工作表",
+    "desc": "新建 sheet 页",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "工作表",
+        "argName": "sheet_name",
+        "value": ""
+      }
+    ]
+  },
+  "excel.delete_worksheet": {
+    "title": "删除工作表",
+    "desc": "删除 sheet 页",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "工作表",
+        "argName": "sheet_name",
+        "value": ""
+      }
+    ]
+  },
+  "excel.save": {
+    "title": "保存/另存为 Excel 文件",
+    "desc": "保存/另存为 Excel 文件",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "保存路径",
+        "argName": "file_path",
+        "value": "None"
+      }
+    ]
+  },
+  "excel.get_value": {
+    "title": "读取 Excel 内容",
+    "desc": "读取 Excel 内容",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "单元格区域",
+        "argName": "region_text",
+        "value": ""
+      },
+      {
+        "label": "内容属性",
+        "argName": "attr",
+        "value": "'真实值'",
+        "options": [
+          "'真实值'",
+          "'显示值'",
+          "'公式'"
+        ]
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "excel_data"
+      }
+    ]
+  },
+  "excel.set_value": {
+    "title": "写入内容至单元格区域",
+    "desc": "写入内容至单元格区域",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "起始单元格",
+        "argName": "region_text",
+        "value": ""
+      },
+      {
+        "label": "值",
+        "argName": "value",
+        "value": ""
+      },
+      {
+        "label": "是否文本格式",
+        "argName": "str_flag",
+        "value": "False"
+      }
+    ]
+  },
+  "excel.close_excel": {
+    "title": "关闭 Excel",
+    "desc": "关闭 Excel",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": "None"
+      },
+      {
+        "label": "关闭类型",
+        "argName": "close_type",
+        "value": "'关闭指定Excel'",
+        "options": [
+          "'关闭指定Excel'",
+          "'关闭所有Excel'"
+        ]
+      },
+      {
+        "label": "是否保存",
+        "argName": "save_flag",
+        "value": "True",
+        "options": [
+          {
+            "title": "是",
+            "value": "True"
+          },
+          {
+            "title": "否",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "label": "保存路径",
+        "argName": "file_path",
+        "value": "None"
+      }
+    ]
+  },
+  "excel.get_row_count": {
+    "title": "读取 Excel 总行数",
+    "desc": "读取 Excel 总行数",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": "None"
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "excel_row_count"
+      }
+    ]
+  },
+  "excel.get_column_count": {
+    "title": "读取 Excel 总列数",
+    "desc": "读取 Excel 总列数",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "excel_row_count"
+      }
+    ]
+  },
+  "excel.insert_rows": {
+    "title": "插入行",
+    "desc": "插入行",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "第几行前",
+        "argName": "row",
+        "value": ""
+      },
+      {
+        "label": "插入行数",
+        "argName": "row_num",
+        "value": "1"
+      }
+    ]
+  },
+  "excel.insert_columns": {
+    "title": "插入列",
+    "desc": "插入列",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "第几列前",
+        "argName": "column",
+        "value": ""
+      },
+      {
+        "label": "插入列数",
+        "argName": "column_num",
+        "value": "1"
+      }
+    ]
+  },
+  "excel.delete_rows": {
+    "title": "删除行",
+    "desc": "删除行",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "起始行",
+        "argName": "start_row",
+        "value": ""
+      },
+      {
+        "label": "结束行",
+        "argName": "end_row",
+        "value": ""
+      }
+    ]
+  },
+  "excel.delete_columns": {
+    "title": "删除行",
+    "desc": "删除行",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "起始列",
+        "argName": "start_row",
+        "value": ""
+      },
+      {
+        "label": "结束列",
+        "argName": "end_row",
+        "value": ""
+      }
+    ]
+  },
+  "excel.set_region_shape": {
+    "title": "区域长宽设置",
+    "desc": "区域长宽设置",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "单元格区域",
+        "argName": "region_text",
+        "value": ""
+      },
+      {
+        "label": "单元格宽度",
+        "argName": "width",
+        "value": "-1"
+      },
+      {
+        "label": "单元格高度",
+        "argName": "height",
+        "value": "-1"
+      }
+    ]
+  },
+  "excel.set_region_format": {
+    "title": "单元格格式设置",
+    "desc": "单元格格式设置",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "单元格区域",
+        "argName": "region_text",
+        "value": ""
+      },
+      {
+        "label": "格式",
+        "argName": "format_text",
+        "value": "",
+        "options": [
+          "'文本'",
+          "'年-月-日'",
+          "'两位小数'",
+          "'百分比'"
+        ]
+      }
+    ]
+  },
+  "excel.merge_cells": {
+    "title": "合并单元格",
+    "desc": "合并单元格",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "单元格区域",
+        "argName": "region_text",
+        "value": ""
+      }
+    ]
+  },
+  "excel.unmerge_cells": {
+    "title": "拆分单元格",
+    "desc": "拆分单元格",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "单元格区域",
+        "argName": "region_text",
+        "value": ""
+      }
+    ]
+  },
+  "excel.excel_sort": {
+    "title": "排序",
+    "desc": "排序",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "excel_row_count"
+      }
+    ]
+  },
+  "excel.filter_col": {
+    "title": "筛选列数据",
+    "desc": "筛选列数据",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "单元格区域",
+        "argName": "region_text",
+        "value": ""
+      },
+      {
+        "label": "条件 1",
+        "argName": "criteria1",
+        "value": ""
+      },
+      {
+        "label": "操作",
+        "argName": "option",
+        "value": "'筛选值'",
+        "options": [
+          "'筛选值'",
+          "'条件1和条件2的逻辑与'",
+          "'条件1和条件2的逻辑或'"
+        ]
+      },
+      {
+        "label": "条件 2",
+        "argName": "criteria2",
+        "value": "None"
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "excel_row_count"
+      }
+    ]
+  },
+  "excel.remove_filter": {
+    "title": "清除筛选",
+    "desc": "清除筛选",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      }
+    ]
+  },
+  "excel.auto_fill": {
+    "title": "自动填充",
+    "desc": "自动填充",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "源区域",
+        "argName": "source",
+        "value": ""
+      },
+      {
+        "label": "目标区域",
+        "argName": "destination",
+        "value": ""
+      },
+      {
+        "label": "填充方式",
+        "argName": "fill_type",
+        "value": "'默认'",
+        "options": [
+          "'默认'",
+          "'复制值和格式'",
+          "'复制格式'",
+          "'复制值'",
+          "'乘法计算'",
+          "'加法计算'"
+        ]
+      }
+    ]
+  },
+  "excel.print_set": {
+    "title": "打印设置",
+    "desc": "打印设置",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "方向",
+        "argName": "orientation",
+        "value": "'纵向'",
+        "options": [
+          "'纵向'",
+          "'横向'"
+        ]
+      },
+      {
+        "label": "纸张大小",
+        "argName": "paper_size",
+        "value": "None",
+        "options": [
+          "None",
+          "'A4'",
+          "'A3'",
+          "'A5'",
+          "'B4'",
+          "'B5'"
+        ]
+      },
+      {
+        "label": "缩放页宽",
+        "argName": "width",
+        "value": "False",
+        "options": [
+          "True",
+          "False"
+        ]
+      },
+      {
+        "label": "缩放页高",
+        "argName": "height",
+        "value": "False",
+        "options": [
+          "True",
+          "False"
+        ]
+      }
+    ]
+  },
+  "excel.copy_region": {
+    "title": "复制单元格区域",
+    "desc": "复制单元格区域",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "单元格区域",
+        "argName": "region_text",
+        "value": ""
+      }
+    ]
+  },
+  "excel.paste_region": {
+    "title": "粘贴内容到单元格区域",
+    "desc": "粘贴内容到单元格区域",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "单元格区域",
+        "argName": "region_text",
+        "value": ""
+      },
+      {
+        "label": "粘贴选项",
+        "argName": "paste_option",
+        "value": "'粘贴全部内容'",
+        "options": [
+          "'粘贴全部内容'",
+          "'粘贴除边框外的全部内容'",
+          "'将粘贴所有内容，并且将合并条件格式'",
+          "'使用源主题粘贴全部内容'",
+          "'粘贴复制的列宽'",
+          "'粘贴批注'",
+          "'粘贴复制的源格式'",
+          "'粘贴公式'",
+          "'粘贴公式和数字格式'",
+          "'粘贴有效性'",
+          "'粘贴值'",
+          "'粘贴值和数字格式'"
+        ]
+      }
+    ]
+  },
+  "excel.find_cell_address": {
+    "title": "查找内容所在单元格位置",
+    "desc": "查找内容所在单元格位置",
+    "kwargs": [
+      {
+        "label": "Excel 对象",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "内容",
+        "argName": "text",
+        "value": ""
+      },
+      {
+        "label": "单元格区域",
+        "argName": "region_text",
+        "value": "all"
+      },
+      {
+        "label": "查找方式",
+        "argName": "look_in",
+        "value": "'值'",
+        "options": [
+          "'批注'",
+          "'公式'",
+          "'值'"
+        ]
+      },
+      {
+        "label": "匹配方式",
+        "argName": "look_at",
+        "value": "'全部匹配'",
+        "options": [
+          "'全部匹配'",
+          "'部分匹配'"
+        ]
+      },
+      {
+        "label": "大小写敏感",
+        "argName": "match_case",
+        "value": "False",
+        "options": [
+          {
+            "title": "是",
+            "value": "True"
+          },
+          {
+            "title": "否",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "cell_address"
+      }
+    ]
+  },
+  "excel.tran_col_location": {
+    "title": "列数字与字母转换",
+    "desc": "列数字与字母转换",
+    "kwargs": [
+      {
+        "label": "列名/列数",
+        "argName": "excel_obj",
+        "value": ""
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "col_location"
+      }
+    ]
+  },
+  "web.open_browser": {
+    "title": "打开浏览器",
+    "desc": "打开 Chrome 浏览器",
+    "kwargs": [
+      {
+        "label": "Chrome 默认下载路径",
+        "argName": "download_folder",
+        "value": ""
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "web_driver"
+      }
+    ]
+  },
+  "web.open_url": {
+    "title": "打开网址",
+    "desc": "打开网址",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "网址",
+        "argName": "url",
+        "value": ""
+      }
+    ]
+  },
+  "web.wait_until_element": {
+    "title": "等待元素",
+    "desc": "等待元素出现./消失",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "定位信息",
+        "argName": "locator",
+        "value": ""
+      },
+      {
+        "label": "等待状态",
+        "argName": "wait_type",
+        "value": "'出现'",
+        "options": [
+          "'出现'",
+          "'消失'"
+        ]
+      },
+      {
+        "label": "等待时间",
+        "argName": "timeout",
+        "value": "10"
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "wait_result"
+      }
+    ]
+  },
+  "web.element_is_exist": {
+    "title": "元素是否存在",
+    "desc": "判断元素是否存在",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "定位信息",
+        "argName": "locator",
+        "value": ""
+      },
+      {
+        "label": "等待时间",
+        "argName": "timeout",
+        "value": "10"
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "wait_result"
+      }
+    ]
+  },
+  "web.scroll_to_visible": {
+    "title": "滚动滚动条至元素可见",
+    "desc": "滚动滚动条至元素可见",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "定位信息",
+        "argName": "locator",
+        "value": ""
+      },
+      {
+        "label": "等待时间",
+        "argName": "timeout",
+        "value": "10"
+      }
+    ]
+  },
+  "web.click_element": {
+    "title": "点击元素",
+    "desc": "点击元素",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "定位信息",
+        "argName": "locator",
+        "value": ""
+      },
+      {
+        "label": "点击方式",
+        "argName": "click_type",
+        "value": "'单击'",
+        "options": [
+          "'单击'",
+          "'双击'",
+          "'右击'"
+        ]
+      },
+      {
+        "label": "等待时间",
+        "argName": "timeout",
+        "value": "10"
+      }
+    ]
+  },
+  "web.clear_element": {
+    "title": "清空输入框",
+    "desc": "清空输入框",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "定位信息",
+        "argName": "locator",
+        "value": ""
+      },
+      {
+        "label": "等待时间",
+        "argName": "timeout",
+        "value": "10"
+      }
+    ]
+  },
+  "web.input_text": {
+    "title": "填写输入框",
+    "desc": "填写输入框",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "定位信息",
+        "argName": "locator",
+        "value": ""
+      },
+      {
+        "label": "输入文本",
+        "argName": "text",
+        "value": ""
+      },
+      {
+        "label": "等待时间",
+        "argName": "timeout",
+        "value": "10"
+      }
+    ]
+  },
+  "web.hover_element": {
+    "title": "鼠标悬停在元素上",
+    "desc": "鼠标悬停在元素上",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "定位信息",
+        "argName": "locator",
+        "value": ""
+      },
+      {
+        "label": "等待时间",
+        "argName": "timeout",
+        "value": "10"
+      }
+    ]
+  },
+  "web.go_back": {
+    "title": "网页回退",
+    "desc": "浏览器操作：回退",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      }
+    ]
+  },
+  "web.reload_page": {
+    "title": "网页回退",
+    "desc": "浏览器操作：回退",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      }
+    ]
+  },
+  "web.execute_javascript": {
+    "title": "网页回退",
+    "desc": "浏览器操作：回退",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "JS 代码",
+        "argName": "js_code",
+        "value": ""
+      }
+    ]
+  },
+  "web.get_web_info": {
+    "title": "获取网页信息",
+    "desc": "获取网页信息",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "网页信息",
+        "argName": "attr_name",
+        "value": "'标题'",
+        "options": [
+          "'标题'",
+          "'html源码'",
+          "'网址'",
+          "'cookies'"
+        ]
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "web_info"
+      }
+    ]
+  },
+  "web.get_element_attr": {
+    "title": "获取元素信息",
+    "desc": "获取元素信息",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "定位信息",
+        "argName": "locator",
+        "value": ""
+      },
+      {
+        "label": "元素信息",
+        "argName": "attr_name",
+        "value": "'文本'",
+        "options": [
+          "'文本'",
+          "'值'",
+          "'属性'"
+        ]
+      },
+      {
+        "label": "等待时间",
+        "argName": "timeout",
+        "value": "10"
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "element_attr"
+      }
+    ]
+  },
+  "web.handle_alert": {
+    "title": "处理对话框",
+    "desc": "处理网页弹出的对话框【默认accept】",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": "alert_text"
+      }
+    ]
+  },
+  "web.switch_iframe": {
+    "title": "切换 iframe",
+    "desc": "切换iframe，多层iframe需要从外向内一层一层切入",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "定位信息",
+        "argName": "locator",
+        "value": ""
+      },
+      {
+        "label": "等待时间",
+        "argName": "timeout",
+        "value": "10"
+      }
+    ]
+  },
+  "web.exit_iframe": {
+    "title": "退出 iframe",
+    "desc": "退出所有iframe回到主html",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      }
+    ]
+  },
+  "web.switch_window": {
+    "title": "切换窗口/网页",
+    "desc": "切换窗口/网页",
+    "kwargs": [
+      {
+        "label": "浏览器对象",
+        "argName": "web_driver",
+        "value": ""
+      },
+      {
+        "label": "切换依据",
+        "argName": "switch_type",
+        "value": "'最新'",
+        "options": [
+          "'最新'",
+          "'标题'",
+          "'位置'"
+        ]
+      },
+      {
+        "label": "窗口",
+        "argName": "window",
+        "value": ""
+      },
+      {
+        "label": "等待时间",
+        "argName": "timeout",
+        "value": "10"
+      },
+      {
+        "label": "返回保存为",
+        "argName": "ret",
+        "value": ""
+      }
+    ]
+  }
+}

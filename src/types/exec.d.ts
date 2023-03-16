@@ -9,11 +9,24 @@ type ConditionsItem = ConditionItem & {
   onRemove?: (i: number) => void
 }
 
-type ProcessNodeModelValue = ObjectValue
+type ProcessNodeModelValue = ObjectValue | CommonArgItem[]
 
 interface ProcessNode {
   id: string
   is: string
   title?: string
   modelValue?: ProcessNodeModelValue
+}
+
+interface RunnableNode {
+  id: string
+  func: string
+  kwargs: ObjectValue
+}
+
+interface CommonArgItem {
+  label: string
+  argName: string
+  value: string | CommonArgItem[] | CommonArgItem[][]
+  options?: SimpleItem[]
 }

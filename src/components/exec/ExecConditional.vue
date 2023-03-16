@@ -38,8 +38,9 @@
           <div class="bg-slate grow-1 h-0.4" v-if="!props.modelValue.noFalsy" />
         </div>
         <div class="pl-8">
-          <exec-sequential class="py-4 before-top-0" :modelValue="props.modelValue.truthy || []"
-            @update:modelValue="emits('update:modelValue', { ...props.modelValue, truthy: $event })" />
+          <exec-sequential class="py-4 before-top-0"
+            :modelValue="props.modelValue.executionTruthy || []"
+            @update:modelValue="emits('update:modelValue', { ...props.modelValue, executionTruthy: $event })" />
         </div>
       </div>
       <div v-if="!props.modelValue.noFalsy">
@@ -49,8 +50,9 @@
           </plain-card>
         </div>
         <div class="pl-8">
-          <exec-sequential class="py-4 before-top-0" :modelValue="props.modelValue.falsy || []"
-            @update:modelValue="emits('update:modelValue', { ...props.modelValue, falsy: $event })" />
+          <exec-sequential class="py-4 before-top-0"
+            :modelValue="props.modelValue.executionFalsy || []"
+            @update:modelValue="emits('update:modelValue', { ...props.modelValue, executionFalsy: $event })" />
         </div>
       </div>
     </div>
@@ -64,8 +66,8 @@ interface Props {
   modelValue?: {
     type: 'any' | 'all'
     conditions: ConditionItem[]
-    truthy: ProcessNode[]
-    falsy: ProcessNode[]
+    executionTruthy: ProcessNode[]
+    executionFalsy: ProcessNode[]
     noFalsy: boolean
   }
 }
@@ -81,8 +83,8 @@ const props = withDefaults(defineProps<Props>(), {
     return {
       type: 'all',
       conditions: [],
-      truthy: [],
-      falsy: [],
+      executionTruthy: [],
+      executionFalsy: [],
       noFalsy: false
     }
   }

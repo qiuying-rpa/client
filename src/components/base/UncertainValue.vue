@@ -34,11 +34,11 @@ function analyzeInputType (input: string) {
   let type = 'any'
   if (input === 'None') {
     type = 'bg-slate-100 c-slate-400'
-  } else if (input?.match(/^".*?"$/)) {
+  } else if (input?.match(/^".*?"$/) || input?.match(/^'.*?'$/)) {
     type = 'bg-emerald-100 c-emerald-400'
   } else if (variableCandidates.value.some(v => v.value === input)) {
     type = 'bg-red-100 c-red-400'
-  } else if (input?.match(/^\d+$/)) {
+  } else if (input?.match(/^[+-]?\d+$/)) {
     type = 'bg-orange-100 c-orange-400'
   }
   inputColor.value = type

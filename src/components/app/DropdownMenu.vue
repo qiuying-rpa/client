@@ -9,9 +9,10 @@
       <template v-if="props.items instanceof Array">
         <div v-if="props.items?.length">
           <div
-            :class="(props.selected === i.value ? ['bg-#dbeafe', 'hover-bg-#dbeafe', 'fw-550'] : ['hover-bg-#f4f4f5']).concat(idx > 0 ? 'mt-1' : '').concat(itemClasses)"
-            v-for="(i, idx) in props.items" :key="idx" @click="onSelect(i.value)">
-            {{ i.title }}
+            :class="((props.selected === (i as SimpleItem).value || props.selected === i) ? ['bg-#dbeafe', 'hover-bg-#dbeafe', 'fw-550'] : ['hover-bg-#f4f4f5']).concat(idx > 0 ? 'mt-1' : '').concat(itemClasses)"
+            v-for="(i, idx) in props.items" :key="idx"
+            @click="onSelect((i as SimpleItem).value || i as string)">
+            {{ (i as SimpleItem).title || i }}
           </div>
         </div>
         <div v-else class="whitespace-nowrap text-xs select-none">
@@ -48,7 +49,7 @@ import { onMounted, ref } from 'vue'
 
 interface Props {
   modelValue: boolean
-  items: SimpleItem[] | { [key: string]: SimpleItem[] }
+  items: SimpleItem[] | { [key: string]: SimpleItem[] } | string[]
   selected?: ValueType
   implicit?: unknown
 }

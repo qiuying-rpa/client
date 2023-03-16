@@ -24,11 +24,13 @@ import { useDraggingStore, useDraggingOverStore } from '@/store/designer'
 import { deepCopy, uuid } from '@/utils/common'
 import { storeToRefs } from 'pinia'
 import { watch } from 'vue'
+import ComponentsModelMap from '@/assets/components.json'
 
 interface Props {
   modelValue: ProcessNode[]
 }
 
+const customizedComponents = ['print-log', 'set-variable', 'exec-circular', 'exec-conditional']
 const currId = uuid()
 
 const props = defineProps<Props>()
@@ -52,11 +54,23 @@ function updateNodeModelValue (targetIndex: number, modelValue: ProcessNodeModel
 
 function insertNode (targetIndex: number) {
   const nodesNew = deepCopy(props.modelValue)
-  nodesNew.splice(targetIndex, 1, {
-    id: uuid(),
-    is: dragging.value,
-    modelValue: {}
-  })
+  if (customizedComponents.some(cc => cc === dragging.value)) {
+    nodesNew.splice(targetIndex, 1, {
+      id: uuid(),
+      is: dragging.value,
+      modelValue: Object.entries(ComponentsModelMap).find(([key]) => key === dragging.value)![1].kwargs
+    })
+  } else {
+    const matchedComponent = Object.entries(ComponentsModelMap).find(([key]) => key === dragging.value)
+
+    nodesNew.splice(targetIndex, 1, {
+      id: uuid(),
+      is: 'sun-wukong',
+      modelValue: matchedComponent![1].kwargs,
+      title: matchedComponent![1].title
+    })
+  }
+
   emits('update:modelValue', nodesNew)
 }
 

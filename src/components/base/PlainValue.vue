@@ -17,6 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: '某值',
   modelValue: ''
 })
+defineExpose({ cursorMoveLast })
 
 const inputRef: Ref<HTMLElement | null> = ref(null)
 
@@ -56,5 +57,6 @@ function cursorMoveLast () {
 div[contenteditable]:empty::before {
   content: attr(placeholder);
   cursor: text;
+  opacity: 0.62;
 }
 </style>

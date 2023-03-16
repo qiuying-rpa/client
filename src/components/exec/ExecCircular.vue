@@ -55,16 +55,7 @@ const blankCondition = {
   right: ''
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  modelValue: () => ({
-    type: 'iteration',
-    execution: []
-  })
-})
-const emits = defineEmits(['update:modelValue'])
-
-const conditions = reactive<ConditionsItem[]>([{ ...blankCondition, onAdd: addCondition }])
-const iterationConf = reactive<KwargsFormModelValue[]>([
+const blankIterationConf = [
   {
     label: '访问目标',
     argName: 'target',
@@ -80,7 +71,18 @@ const iterationConf = reactive<KwargsFormModelValue[]>([
     argName: 'index',
     value: ''
   }
-])
+]
+
+const props = withDefaults(defineProps<Props>(), {
+  modelValue: () => ({
+    type: 'iteration',
+    execution: []
+  })
+})
+const emits = defineEmits(['update:modelValue'])
+
+const conditions = reactive<ConditionsItem[]>([{ ...blankCondition, onAdd: addCondition }])
+const iterationConf = ref<KwargsFormModelValue[]>(blankIterationConf)
 
 watch(conditions, (conditions) => {
   emits('update:modelValue', { ...props.modelValue, conditions })
@@ -94,6 +96,9 @@ watch(() => props.modelValue.type, (val) => {
   if (val === 'iteration') {
     conditions.splice(0)
     conditions.push({ ...blankCondition, onAdd: addCondition })
+
+    // init iteration conf
+    iterationConf.value = blankIterationConf
   }
 })
 

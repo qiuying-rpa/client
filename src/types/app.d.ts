@@ -18,3 +18,11 @@ type TreeItem = Exclude<ListItem, 'offset'> & {
 }
 
 type TabItem = Exclude<ListItem, 'offset'>
+
+// notifier
+type NotificationType = 'success' | 'error' | 'warn' | 'info' | 'loading'
+
+interface QNotification {
+  content: string
+  type: NotificationType
+}
