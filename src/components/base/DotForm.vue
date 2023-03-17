@@ -5,8 +5,7 @@
         <icon-button :icon="`${overlay ? 'i-mdi-circle-outline' : 'i-mdi-circle'} text-xs`" />
       </div>
     </slot>
-    <div
-      class="pa-3 bg-white shadow rd-2 z-1024 absolute top-50% translate-y--50% left-100% translate-x-5px"
+    <div class="pa-3 bg-white shadow rd-2 z-1024 absolute top-0 left-100% translate-x-5px"
       v-if="overlay">
       <slot></slot>
     </div>

@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { uuid } from '@/utils/common'
+// import { uuid } from '@/utils/common'
 import { useNotifierStore } from '@/store/app'
 
 const { pushNotification } = useNotifierStore()
@@ -25,67 +25,9 @@ interface Props {
   }
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
-const nodes = ref<ProcessNode[]>([
-  {
-    id: uuid(),
-    is: 'set-variable',
-    modelValue: {}
-  },
-  {
-    id: uuid(),
-    is: 'print-log',
-    modelValue: {}
-  },
-  {
-    id: uuid(),
-    is: 'exec-conditional',
-    modelValue: {}
-  },
-  {
-    id: uuid(),
-    is: 'exec-circular',
-    modelValue: {}
-  },
-  {
-    id: uuid(),
-    is: 'sun-wukong',
-    title: '打开已有 Excel',
-    modelValue: [
-      {
-        label: 'Excel 文件路径',
-        argName: 'file_path',
-        value: '""'
-      },
-      {
-        label: 'Sheet 名称',
-        argName: 'sheet_name',
-        value: '"1"'
-      },
-      {
-        label: '密码',
-        argName: 'password',
-        value: 'None'
-      },
-      {
-        label: '是否可视化',
-        argName: 'visible',
-        value: 'True',
-        options: [
-          {
-            title: '是',
-            value: 'True'
-          },
-          {
-            title: '否',
-            value: 'False'
-          }
-        ]
-      }
-    ]
-  }
-])
+const nodes = ref<ProcessNode[]>([])
 
 // TODO lose many validation
 function genKwargs (modelValue: ProcessNode | ProcessNode[] | ObjectValue | CommonArgItem[] | CommonArgItem[][]): ObjectValue | ObjectValue[] | RunnableNode[] {
@@ -119,11 +61,19 @@ function run () {
       }
     ]
   }
-  console.log(destNodes)
+
+  fetch('/run', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(destNodes)
+  }).then(() => {
+    pushNotification('Running..', 'success')
+  })
 }
 
 function save () {
-  console.log({ process: nodes.value, name: props.meta.title })
   pushNotification('Saved.', 'info')
 }
 </script>

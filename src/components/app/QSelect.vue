@@ -4,7 +4,8 @@
     <template #activator="{ attrs }">
       <div v-bind="attrs"
         class="whitespace-nowrap cursor-pointer c-gray-600 b-1 b-solid b-gray-2 px-1 py-.5 rd-1.5 flex items-center select-none">
-        {{ getItemsArray().find(i => i.value === props.modelValue)?.title || props.placeholder }}
+        {{ getItemsArray().find(i => i.value === props.modelValue)?.title || props.modelValue ||
+          props.placeholder }}
         <i class="inline-block" :class="[dropdown ? 'i-mdi-chevron-up' : 'i-mdi-chevron-down']" />
       </div>
     </template>

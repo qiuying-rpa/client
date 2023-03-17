@@ -7,8 +7,8 @@
         <hint-node v-if="is === 'hint-node'" :class="{ 'mt-4': index > 0 }" />
         <component v-else :is="is.startsWith('exec') ? 'div' : 'node-shell'" :id="id"
           :class="{ 'mt-4': index > 0 }">
-          <component :modelValue="modelValue" :is="is" :title="title"
-            @update:modelValue="updateNodeModelValue(index, $event)"
+          <component :modelValue="modelValue" :is="customizedComponents.includes(is) ? is : 'sun-wukong'"
+            :title="title" @update:modelValue="updateNodeModelValue(index, $event)"
             :class="{ 'mt-4': index > 0 && is.startsWith('exec') }" @remove="removeNode(index)" />
         </component>
       </template>
@@ -58,14 +58,14 @@ function insertNode (targetIndex: number) {
     nodesNew.splice(targetIndex, 1, {
       id: uuid(),
       is: dragging.value,
-      modelValue: Object.entries(ComponentsModelMap).find(([key]) => key === dragging.value)![1].kwargs
+      modelValue: {}
     })
   } else {
     const matchedComponent = Object.entries(ComponentsModelMap).find(([key]) => key === dragging.value)
 
     nodesNew.splice(targetIndex, 1, {
       id: uuid(),
-      is: 'sun-wukong',
+      is: dragging.value,
       modelValue: matchedComponent![1].kwargs,
       title: matchedComponent![1].title
     })

@@ -1,9 +1,9 @@
 <template>
   <div class="flex w-100% overflow-hidden">
     <!-- task list -->
-    <div class="w-12% flex-col pa-4 box-border b-r-1 b-r-solid b-gray-3">
+    <!-- <div class="w-12% flex-col pa-4 box-border b-r-1 b-r-solid b-gray-3">
       <q-tree :items="tasks" v-model:open="tasksOpen" />
-    </div>
+    </div> -->
 
     <!-- nodes -->
     <div class="w-15% pa-4 box-border overflow-auto">
@@ -139,20 +139,20 @@ const nodes = reactive([
 //   }
 // ])
 
-const tasks = reactive([
-  {
-    title: '流程 1',
-    value: 'process-1',
-    icon: 'i-mdi-file-tree'
-  },
-  {
-    title: '流程 2',
-    value: 'process-2',
-    icon: 'i-mdi-file-tree'
-  }
-])
+// const tasks = reactive([
+//   {
+//     title: '流程 1',
+//     value: 'process-1',
+//     icon: 'i-mdi-file-tree'
+//   },
+//   {
+//     title: '流程 2',
+//     value: 'process-2',
+//     icon: 'i-mdi-file-tree'
+//   }
+// ])
 
-const tasksOpen = ref([])
+// const tasksOpen = ref([])
 const editingTitle = ref(false)
 const title = ref('未命名')
 const titleInputRef = ref<typeof PlainValue | null>(null)

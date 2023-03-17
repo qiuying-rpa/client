@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import UnoCSS from 'unocss/vite';
+import UnoCSS from 'unocss/vite'
 import presetIcons from 'unocss/preset-icons'
 import { presetUno } from 'unocss'
-import { resolve } from 'path';
+import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,4 +16,5 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
+  base: '/static'
 })
