@@ -1,0 +1,3 @@
+<template>
+  Forget Password
+</template>

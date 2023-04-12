@@ -3,27 +3,27 @@ import { uuid } from '@/utils/common'
 import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue'
 
-interface Menu {
-  icon: string
-  title: string
-  path: string
-}
-
 interface UserInfo {
   id: string
   name: string
 }
 
-export const useAppStore = defineStore('app', () => {
-  const menus = ref<Menu[]>([])
-  const actions = ref<string[]>([])
-  const userInfo = ref<UserInfo | null>(null)
+type ErrorValue = 404 | 403 | null
+type LoadingValue = number | null
 
-  function setMenus(_menus: Menu[]) {
+
+export const useAppStore = defineStore('app', () => {
+  const menus = ref<string[]>([])
+  const actions = ref<PermissionValue>([])
+  const userInfo = ref<UserInfo | null>(null)
+  const error = ref<ErrorValue>(null)
+  const loading = ref<LoadingValue>(null)
+
+  function setMenus(_menus: string[]) {
     menus.value = _menus
   }
 
-  function setActions(_actions: string[]) {
+  function setActions(_actions: PermissionValue) {
     actions.value = _actions
   }
 
@@ -31,7 +31,15 @@ export const useAppStore = defineStore('app', () => {
     userInfo.value = info
   }
 
-  return { menus, actions, userInfo, setMenus, setActions, setUserInfo }
+  function setError(_error: ErrorValue) {
+    error.value = _error
+  }
+
+  function setLoading(_loading: LoadingValue) {
+    loading.value = _loading
+  }
+
+  return { menus, actions, userInfo, error, loading, setMenus, setActions, setUserInfo, setError, setLoading }
 })
 
 export const useNotifierStore = defineStore('notifier', () => {
