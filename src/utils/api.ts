@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
-import { ACCESS_TOKEN_KEY, BASE_URL, REFRESH_TOKEN_KEY, REQUEST_TIMEOUT } from '@/config'
 import { getAccessToken, getRefreshToken, removeToken } from './auth'
 import { useNotifierStore } from '@/store/app'
 import { useRouter } from 'vue-router'
@@ -15,7 +14,7 @@ const responseErrorInterceptor = (error: AxiosError) => {
   if (error.response?.status === 426) {
     const config = error.config
     if (config?.headers) {
-      config.headers[REFRESH_TOKEN_KEY] = getRefreshToken()
+      config.headers[import.meta.env.VITE_REFRESH_TOKEN_KEY] = getRefreshToken()
       return axios(config)
     }
   }
@@ -49,14 +48,14 @@ const responseErrorInterceptor = (error: AxiosError) => {
 const requestInterceptor = (config: InternalAxiosRequestConfig) => {
   const token = getAccessToken()
   if (token && config.headers) {
-    config.headers[ACCESS_TOKEN_KEY] = token
+    config.headers[import.meta.env.VITE_ACCESS_TOKEN_KEY] = token
   }
   return config
 }
 
 export const jsonAxios = axios.create({
-  baseURL: BASE_URL,
-  timeout: REQUEST_TIMEOUT,
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  timeout: +import.meta.env.VITE_REQUEST_TIMEOUT,
   withCredentials: false,
   headers: { 'Content-Type': 'application/json' },
 })
@@ -69,8 +68,8 @@ jsonAxios.interceptors.response.use(
 )
 
 export const formDataAxios = axios.create({
-  baseURL: BASE_URL,
-  timeout: REQUEST_TIMEOUT,
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  timeout: +import.meta.env.VITE_REQUEST_TIMEOUT,
   withCredentials: false,
   headers: { 'Content-Type': 'multipart/form-data' },
 })

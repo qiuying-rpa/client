@@ -3,6 +3,7 @@ import { getPermissions } from '@/api/auth'
 import { useAppStore, useNotifierStore } from '@/store/app'
 import { getAccessToken, removeToken } from '@/utils/auth'
 import { decodeJwt } from '@/utils/encrypt'
+import { useTitle } from '@vueuse/core'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 
@@ -14,7 +15,7 @@ export const routes = [
     children: [
       {
         path: 'sign-in',
-        name: 'Sign In',
+        name: '登录',
         component: () => import('@/views/SignIn.vue'),
         meta: {
           tags: ['no-auth']
@@ -22,7 +23,7 @@ export const routes = [
       },
       {
         path: 'sign-up',
-        name: 'Sign Up',
+        name: '注册',
         component: () => import('@/views/SignUp.vue'),
         meta: {
           tags: ['no-auth']
@@ -30,7 +31,7 @@ export const routes = [
       },
       {
         path: 'forget-password',
-        name: 'Forget Password',
+        name: '忘记密码',
         component: () => import('@/views/ForgetPassword.vue'),
         meta: {
           tags: ['no-auth']
@@ -177,16 +178,19 @@ function checkAuthorized(certain: string, authorized: string[]) {
 }
 
 router.beforeEach(async (to) => {
-  const { setError, menus, setLoading } = useAppStore()
+  const { setError, setLoading } = useAppStore()
 
   if (!to.matched.length) {
     setError(404)
   } else {
     setLoading(0)
+    useTitle('Loading.. | 秋英 RPA')
+
     if (to.meta.tag !== 'public') {
       const accessToken = getAccessToken()
       if (accessToken) {
         await initUser(accessToken)
+        const { menus } = useAppStore()
 
         if (menus.length) {
           if (to.path === '/' || ((to.meta.tags as string[]) || []).includes('no-auth')) {
@@ -199,7 +203,9 @@ router.beforeEach(async (to) => {
           const { pushNotification } = useNotifierStore()
           removeToken()
           pushNotification('No accessible menu found.', 'error')
-          return { name: '/sign-in', replace: true }
+          if (to.path !== '/sign-in') {
+            return { path: '/sign-in', replace: true }
+          }
         }
       } else {
         if (!(to.meta.tags as string[] || []).includes('no-auth')) {
@@ -210,8 +216,9 @@ router.beforeEach(async (to) => {
   }
 })
 
-router.afterEach(() => {
+router.afterEach((to) => {
   useAppStore().setLoading(94)
+  useTitle(`${to.name as string || ':/'} | 秋英 RPA`)
 })
 
 export default router
