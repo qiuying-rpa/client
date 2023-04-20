@@ -2,7 +2,7 @@ import { App, Component } from "vue"
 
 export default {
   install(app: App) {
-    const components = Object.entries(import.meta.glob('../components/qiuying/**/*.vue', { eager: true, import: 'default' }))
+    const components = Object.entries(import.meta.glob('../components/designer/qiuying/**/*.vue', { eager: true, import: 'default' }))
 
     components.forEach(([name, module]) => {
       const [, componentName] = (name.match(/\/([^/]*?)\.vue/) as string[])

@@ -1,17 +1,21 @@
 // Composables
-import { getPermissions } from '@/api/auth'
+import { getPermissions } from '@/models/auth'
 import { useAppStore, useNotifierStore } from '@/store/app'
 import { getAccessToken, removeToken } from '@/utils/auth'
 import { decodeJwt } from '@/utils/encrypt'
 import { useTitle } from '@vueuse/core'
+import { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 
-export const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'Barren',
     component: () => import('@/layouts/Barren.vue'),
+    meta: {
+      tags: ['layout']
+    },
     children: [
       {
         path: 'sign-in',
@@ -80,6 +84,7 @@ export const routes = [
         meta: {
           icon: 'mdi-cog-outline',
           order: 3,
+          tags: ['nav']
         },
         component: () => import('@/layouts/System.vue'),
         children: [
@@ -110,29 +115,29 @@ export const routes = [
         name: '设计器',
         component: () => import('@/views/Designer.vue'),
         meta: {
-          icon: 'mdi-pencil-ruler-outline',
+          icon: 'mdi-robot-industrial-outline',
           order: 0,
-          tags: ['menu']
+          tags: ['menu', 'nav']
         }
       }, {
         path: 'processes',
         name: '流程管理',
         component: () => import('@/views/Processes.vue'),
         meta: {
-          icon: 'mdi-sitemap-outline',
+          icon: 'mdi-robot-outline',
           order: 1,
-          tags: ['menu'],
+          tags: ['menu', 'nav'],
           actions: [
             {
-              name: '新建流程',
+              title: '新建流程',
               value: 'process:create'
             },
             {
-              name: '编辑流程',
+              title: '编辑流程',
               value: 'process:update'
             },
             {
-              name: '删除流程',
+              title: '删除流程',
               value: 'process:delete'
             }
           ]
@@ -146,7 +151,6 @@ const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
   routes,
 })
-
 
 async function initUser(token: string) {
   const { userInfo, setUserInfo, setMenus, setActions } = useAppStore()
@@ -217,7 +221,10 @@ router.beforeEach(async (to) => {
 })
 
 router.afterEach((to) => {
-  useAppStore().setLoading(94)
+  const { loading, setLoading } = useAppStore()
+  if (loading) {
+    setLoading(100)
+  }
   useTitle(`${to.name as string || ':/'} | 秋英 RPA`)
 })
 

@@ -3,7 +3,7 @@
     <v-card color="transparent" class="w-30rem xl:w-25rem" flat>
       <v-card-text class="flex justify-center pa-0">
         <div class="flex items-center text-h4 fw-500 mb-1.4rem">
-          <v-img src="qiuying.svg" width="64" class="flex-grow-0 mr-6" />
+          <v-img src="/qiuying.svg" width="64" class="flex-grow-0 mr-6" />
           秋英 RPA
         </div>
       </v-card-text>
@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import { SubmitEventPromise } from 'vuetify'
 import { reactive, ref } from 'vue'
-import { getPublicKey, getToken } from '@/api/auth'
+import { getPublicKey, getToken } from '@/models/auth'
 import JSEncrypt from 'jsencrypt'
 import { useRouter } from 'vue-router'
 import { setToken } from '@/utils/auth'
@@ -54,7 +54,6 @@ const form = reactive({
   password: '',
   rememberMe: false
 })
-
 const invalidMessage = ref<['error' | 'warning' | undefined, string]>([undefined, ''])
 const submitting = ref(false)
 const router = useRouter()
@@ -78,6 +77,7 @@ async function submit(event: SubmitEventPromise) {
     if (code === 0) {
       const { access_token, refresh_token } = data
       setToken(access_token, refresh_token, form.rememberMe)
+
       router.push('/')
     } else {
       invalidMessage.value[0] = 'error'

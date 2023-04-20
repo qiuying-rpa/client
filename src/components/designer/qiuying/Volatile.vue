@@ -1,6 +1,8 @@
 <template>
   <plain-card class="select-none relative flex items-center">
-    {{ title }}
+    <div>
+      {{ title }}
+    </div>
     <dot-form class="ml-1">
       <kwargs-form v-model="modelValue" />
     </dot-form>

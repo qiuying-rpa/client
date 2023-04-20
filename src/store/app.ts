@@ -36,7 +36,9 @@ export const useAppStore = defineStore('app', () => {
   }
 
   function setLoading(_loading: LoadingValue) {
-    loading.value = _loading
+    if (!_loading || _loading > (loading.value || -1)) {
+      loading.value = _loading
+    }
   }
 
   return { menus, actions, userInfo, error, loading, setMenus, setActions, setUserInfo, setError, setLoading }

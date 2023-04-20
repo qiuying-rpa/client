@@ -3,7 +3,7 @@
     <plain-card class="relative select-none" @remove="$attrs.onRemove">
       <div class="flex items-center">
         循环执行，直到
-        <q-select class="inline-block mx-1" :items="[
+        <v-select class="inline-block mx-1 min-w-6.5rem" density="compact" :items="[
           {
             title: '遍历所有元素',
             value: 'iteration'
@@ -16,7 +16,7 @@
             title: '任意条件不满足',
             value: 'anyConditionFalsy'
           }
-        ]" v-model="type" />
+        ]" v-model="type" variant="outlined" hide-details placeholder="请选择" />
         <dot-form>
           <kwargs-form v-if="type === 'iteration'" v-model="iterationConf" />
           <template v-else>
@@ -40,7 +40,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue'
 
-interface Props {
+export interface Props {
   modelValue?: {
     type: string
     iterationConf?: KwargsFormModelValue[]
@@ -102,11 +102,11 @@ watch(() => props.modelValue.type, (val) => {
   }
 })
 
-function addCondition () {
+function addCondition() {
   conditions.push({ ...blankCondition, onRemove: removeCondition })
 }
 
-function removeCondition (index: number) {
+function removeCondition(index: number) {
   conditions.splice(index, 1)
   refreshKey.value = new Date().getTime()
 }
@@ -115,6 +115,6 @@ const refreshKey = ref(new Date().getTime())
 
 const type = computed({
   set: (type) => emits('update:modelValue', { ...props.modelValue, type }),
-  get: () => props.modelValue.type
+  get: () => props.modelValue.type || undefined
 })
 </script>

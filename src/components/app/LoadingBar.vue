@@ -1,5 +1,5 @@
 <template>
-  <v-progress-linear :model-value="loading" color="primary" height="2" v-if="loading" absolute />
+  <v-progress-linear :model-value="loading" color="primary" height="1" v-if="loading" absolute />
 </template>
 
 <script setup lang="ts">
@@ -14,25 +14,25 @@ const { setLoading } = useAppStore()
 
 watchEffect(() => {
   if (loading.value === 0) {
-    delta = 3.7
+    delta = 2
     move()
   }
 })
 
 function move() {
-  if (loading.value! < 90 || loading.value! >= 94) {
+  if (loading.value! < 90 || loading.value === 100) {
     const newValue = loading.value! + delta
     setLoading(newValue)
 
-    if (newValue <= 100) {
+    if (newValue < 100) {
       setTimeout(() => {
         move()
       }, 100)
     } else {
-      setLoading(null)
+      setTimeout(() => setLoading(null), 200)
     }
 
-    if (delta > 0.5) {
+    if (delta > 0.1) {
       delta -= 0.1
     }
   }

@@ -1,13 +1,13 @@
 <template>
   <div
-    class="bg-blue-100 c-blue-400 whitespace-nowrap inline-block b-none outline-none py-0.5 px-1 rd-1 fw-550 plain-value"
+    class="bg-blue-100 c-blue-400 whitespace-nowrap inline-block b-none outline-none py-0.5 px-1 rd-1 fw-550"
     contenteditable @input="onInput" :placeholder="props.placeholder" ref="inputRef" />
 </template>
 
 <script setup lang="ts">
 import { onMounted, Ref, ref, watch } from 'vue'
 
-interface Props {
+export interface Props {
   placeholder?: string
   modelValue: string
 }
@@ -32,17 +32,17 @@ watch(() => props.modelValue, (val) => {
   }
 })
 
-function onInput () {
+function onInput() {
   emits('update:modelValue', inputRef.value?.innerText || '')
 }
 
-function setInput (value: string) {
+function setInput(value: string) {
   if (inputRef.value) {
     inputRef.value.innerText = value || ''
   }
 }
 
-function cursorMoveLast () {
+function cursorMoveLast() {
   if (inputRef.value) {
     const range = getSelection()
     range?.selectAllChildren(inputRef.value)

@@ -2,44 +2,51 @@ import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'ax
 import { getAccessToken, getRefreshToken, removeToken } from './auth'
 import { useNotifierStore } from '@/store/app'
 import { useRouter } from 'vue-router'
+import { refreshToken } from '@/models/auth'
+import { setToken } from './auth'
 
 const responseInterceptor = (response: AxiosResponse) => {
   return Promise.resolve(response.data)
 }
 
-const responseErrorInterceptor = (error: AxiosError) => {
+const responseErrorInterceptor = async (error: AxiosError) => {
   const { pushNotification } = useNotifierStore()
+  const router = useRouter()
+
+  function notifyAndReset(notification = '未知异常: ' + error.message) {
+    removeToken()
+    pushNotification(
+      notification,
+      'error'
+    )
+    router.push('/')
+  }
 
   // access token is out of date
   if (error.response?.status === 426) {
-    const config = error.config
-    if (config?.headers) {
-      config.headers[import.meta.env.VITE_REFRESH_TOKEN_KEY] = getRefreshToken()
-      return axios(config)
+    const config = error.config!
+    const refreshTokenCached = getRefreshToken()
+    if (refreshTokenCached) {
+      const { code, data, message } = await refreshToken(refreshTokenCached)
+      if (code === 0) {
+        setToken(data.access_token, data.refresh_token, !!localStorage.getItem(import.meta.env.VITE_REFRESH_TOKEN_KEY))
+        config.headers[import.meta.env.VITE_ACCESS_TOKEN_KEY] = data.access_token
+        return (await axios(config)).data
+      } else {
+        notifyAndReset('续期失败: ' + message)
+      }
+    } else {
+      notifyAndReset('续期失败: Refresh token not found.')
     }
   }
 
-  const router = useRouter()
-
   // invalid or refresh token is out of date
   if (error.response?.status === 400) {
-    removeToken()
-    pushNotification(
-      '认证已失效，请重新登录',
-      'error'
-    )
-    router.push('/')
+    notifyAndReset('认证已失效, 请重新登录')
   } else if (error.response?.status === 401) {
-    pushNotification(
-      '请先登录~',
-      'error'
-    )
-    router.push('/')
+    notifyAndReset('请先登录')
   } else {
-    pushNotification(
-      '未知异常：' + error.message,
-      'error'
-    )
+    notifyAndReset()
   }
 
   return Promise.reject(error)

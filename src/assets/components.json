@@ -1,4 +1,31 @@
 {
+  "base.print_log": {
+    "title": "打印日志",
+    "desc": "打印一些日志信息",
+    "kwargs": [
+      {
+        "label": "日志内容",
+        "argName": "content",
+        "value": ""
+      }
+    ]
+  },
+  "base.set_variable": {
+    "title": "设置变量",
+    "desc": "设置变量",
+    "kwargs": [
+      {
+        "label": "变量名称",
+        "argName": "variable",
+        "value": ""
+      },
+      {
+        "label": "变量值",
+        "argName": "variableValue",
+        "value": ""
+      }
+    ]
+  },
   "excel.open_excel": {
     "title": "打开已有 Excel",
     "desc": "启动已经存在的 Excel",
