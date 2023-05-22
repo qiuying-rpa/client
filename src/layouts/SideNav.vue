@@ -3,7 +3,7 @@
     <v-list-item nav class="pa-2 text-center">
       <v-menu>
         <template #activator="{ props }">
-          <v-btn icon v-bind="props" flat density="comfortable">
+          <v-btn icon v-bind="props" flat>
             <v-avatar ref="avatarRef" size="small" />
           </v-btn>
         </template>

@@ -1,9 +1,4 @@
-import axios from "@/utils/axios"
-
-interface GetTokenData {
-  access_token: string
-  refresh_token: string
-}
+import axios from "@/services"
 
 export const getPublicKey = () => axios.get<any, string>('/static/rsa_pub_key.pem')
 

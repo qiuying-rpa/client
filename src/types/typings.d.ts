@@ -89,3 +89,9 @@ interface CommonArgItem {
   options?: SimpleItem<ValueType>[]
 }
 
+// --- auth
+
+interface GetTokenData {
+  access_token: string
+  refresh_token: string
+}

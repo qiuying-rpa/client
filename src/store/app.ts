@@ -9,7 +9,6 @@ interface UserInfo {
 }
 
 type ErrorValue = 404 | 403 | null
-type LoadingValue = number | null
 
 
 export const useAppStore = defineStore('app', () => {
@@ -17,7 +16,6 @@ export const useAppStore = defineStore('app', () => {
   const actions = ref<PermissionValue>([])
   const userInfo = ref<UserInfo | null>(null)
   const error = ref<ErrorValue>(null)
-  const loading = ref<LoadingValue>(null)
 
   function setMenus(_menus: string[]) {
     menus.value = _menus
@@ -35,13 +33,8 @@ export const useAppStore = defineStore('app', () => {
     error.value = _error
   }
 
-  function setLoading(_loading: LoadingValue) {
-    if (!_loading || _loading > (loading.value || -1)) {
-      loading.value = _loading
-    }
-  }
 
-  return { menus, actions, userInfo, error, loading, setMenus, setActions, setUserInfo, setError, setLoading }
+  return { menus, actions, userInfo, error, setMenus, setActions, setUserInfo, setError }
 })
 
 export const useNotifierStore = defineStore('notifier', () => {

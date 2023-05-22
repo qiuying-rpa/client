@@ -10,9 +10,13 @@ import vuetify from './vuetify'
 import pinia from '../store'
 import router from '../router'
 import qiuying from './qiuying'
+import NProgress from 'nprogress'
 import 'virtual:uno.css'
-import '../styles/main.css'
 import 'animate.css'
+import 'nprogress/nprogress.css'
+import '../styles/main.css'
+
+NProgress.configure({ showSpinner: false })
 
 // Types
 import type { App } from 'vue'
