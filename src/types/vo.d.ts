@@ -4,9 +4,10 @@ interface RoleVO {
   id: string
   name: string
   desc: string
+  is_default: boolean
 }
 
-type RoleWithPermissions = RoleVO & {
+type RoleWithPermissionsVO = RoleVO & {
   permissions: Permissions
 }
 

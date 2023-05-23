@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { watch, ref, reactive, computed } from 'vue';
-import { addUsersRoles, getRoles, removeUsersRoles } from '@/services/sys'
+import { createRole, updateRole } from '@/services/sys'
 import { useNotifierStore } from '@/store/app';
 import { SubmitEventPromise } from 'vuetify/lib/framework.mjs';
 
 export interface Props {
   modelValue: boolean,
-  updating: readonly UserVO[],
-  action: 'add' | 'remove'
+  updating: RoleVO | null
 }
 
 const props = defineProps<Props>()
@@ -16,10 +15,10 @@ const emits = defineEmits(['update:modelValue', 'reload'])
 const notifier = useNotifierStore()
 
 const form = reactive({
-  roles: []
+  name: '',
+  desc: ''
 })
 
-const roles = ref<RoleVO[]>([])
 const submitting = ref(false)
 
 const dialog = computed({
@@ -33,7 +32,9 @@ const dialog = computed({
 
 watch(dialog, async (val) => {
   if (val) {
-    roles.value = (await getRoles()).data
+    if (props.updating) {
+      Object.assign(form, { ...props.updating })
+    }
   }
 })
 
@@ -42,16 +43,15 @@ async function submit(event: SubmitEventPromise) {
   if (valid) {
     submitting.value = true
     let response;
-    const userIds = props.updating.map(u => u.id)
 
-    if (props.action === 'add') {
-      response = await addUsersRoles(userIds, form.roles)
+    if (!props.updating) {
+      response = await createRole(form.name, form.desc)
     } else {
-      response = await removeUsersRoles(userIds, form.roles)
+      response = await updateRole(props.updating.id, form.name, form.desc)
     }
 
     if (response.code === 0) {
-      notifier.pushNotification('更新成功', 'success')
+      notifier.pushNotification('保存成功', 'success')
       dialog.value = false
       emits('reload')
     } else {
@@ -68,18 +68,19 @@ async function submit(event: SubmitEventPromise) {
 <template>
   <v-dialog v-model="dialog" class="w-30rem lg:w-40rem">
     <v-card class="rounded-lg">
-      <v-card-title>批量{{ props.action === 'add' ? '分配' : '回收' }}角色</v-card-title>
+      <v-card-title>{{ props.updating ? '编辑' : '新增' }}角色</v-card-title>
       <v-form @submit.prevent="submit">
         <v-card-text>
           <v-container class="pa-0 pt-2">
             <v-row>
               <v-col cols="12">
-                <v-textarea :model-value="props.updating.map(u => u.name).join('、')" label="已选用户"
-                  required multiple variant="outlined" readonly density="compact"></v-textarea>
+                <v-text-field v-model="form.name" :rules="[val => !!val || '角色名不可为空']"
+                  label="角色名*"></v-text-field>
               </v-col>
+
               <v-col cols="12">
-                <v-autocomplete v-model="form.roles" label="角色" required multiple :items="roles"
-                  item-title="name" item-value="id"></v-autocomplete>
+                <v-textarea variant="outlined" density="compact" v-model="form.desc"
+                  label="描述"></v-textarea>
               </v-col>
             </v-row>
           </v-container>

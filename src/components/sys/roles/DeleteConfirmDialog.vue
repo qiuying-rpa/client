@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { deleteUsers } from '@/services/sys'
+import { deleteRoles } from '@/services/sys'
 import { useNotifierStore } from '@/store/app';
 
 export interface Props {
   modelValue: boolean
-  deleting: readonly UserVO[]
+  deleting: readonly RoleVO[]
 }
 
 const props = defineProps<Props>()
@@ -26,7 +26,7 @@ const dialog = computed({
 
 async function submit() {
   submitting.value = true
-  await deleteUsers(props.deleting.map(u => u.id))
+  await deleteRoles(props.deleting.map(u => u.id))
   notifier.pushNotification('删除成功', 'success')
   dialog.value = false
   submitting.value = false
@@ -43,10 +43,10 @@ async function submit() {
           <v-icon size="small" color="warning" class="mr-2">mdi-alert-circle</v-icon>确认删除这{{
             props.deleting.length > 1 ? `
           ${props.deleting.length} ` :
-            '' }}个用户？
+            '' }}个角色？
         </v-card-text>
         <v-card-text>
-          <v-textarea :model-value="props.deleting.map(u => u.name).join('、')" label="已选用户" required
+          <v-textarea :model-value="props.deleting.map(u => u.name).join('、')" label="已选角色" required
             multiple variant="outlined" readonly density="compact"></v-textarea>
         </v-card-text>
         <v-card-actions class="justify-end pr-4">

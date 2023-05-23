@@ -8,7 +8,7 @@ import { getPublicKey } from '@/services/auth';
 
 export interface Props {
   modelValue: boolean,
-  editing: UserVO | null
+  updating: UserVO | null
 }
 
 const props = defineProps<Props>()
@@ -17,7 +17,6 @@ const emits = defineEmits(['update:modelValue', 'reload'])
 const notifier = useNotifierStore()
 
 const form = reactive({
-  id: '',
   name: '',
   email: '',
   password: '',
@@ -40,8 +39,8 @@ watch(dialog, async (val) => {
   if (val) {
     roles.value = (await getRoles()).data
 
-    if (props.editing) {
-      Object.assign(form, { ...props.editing, roles: props.editing.roles.map(r => r.id) })
+    if (props.updating) {
+      Object.assign(form, { ...props.updating, roles: props.updating.roles.map(r => r.id) })
     }
   }
 })
@@ -52,14 +51,14 @@ async function submit(event: SubmitEventPromise) {
     submitting.value = true
     let response;
 
-    if (!props.editing) {
+    if (!props.updating) {
       const encrypt = new JSEncrypt()
       const pubKey = await getPublicKey()
       encrypt.setPublicKey(pubKey)
 
       response = await createUser(form.name, form.email, encrypt.encrypt(form.password) as string, form.roles)
     } else {
-      response = await updateUser(form.id, form.name, form.email, form.roles)
+      response = await updateUser(props.updating.id, form.name, form.email, form.roles)
     }
 
     if (response.code === 0) {
@@ -80,7 +79,7 @@ async function submit(event: SubmitEventPromise) {
 <template>
   <v-dialog v-model="dialog" class="w-30rem lg:w-40rem">
     <v-card class="rounded-lg">
-      <v-card-title>{{ props.editing ? '编辑' : '新增' }}用户</v-card-title>
+      <v-card-title>{{ props.updating ? '编辑' : '新增' }}用户</v-card-title>
       <v-form @submit.prevent="submit">
         <v-card-text>
           <v-container class="pa-0 pt-2">
@@ -96,7 +95,7 @@ async function submit(event: SubmitEventPromise) {
                   label="邮箱*"></v-text-field>
               </v-col>
 
-              <v-col cols="12" v-if="!props.editing">
+              <v-col cols="12" v-if="!props.updating">
                 <v-text-field v-model="form.password" :rules="[val => !!val || '密码不可为空']" label="密码*"
                   type="password"></v-text-field>
               </v-col>
