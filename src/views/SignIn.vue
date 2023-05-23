@@ -13,12 +13,12 @@
       <v-form @submit.prevent="submit" class="mt-1.4rem">
         <v-row>
           <v-col cols="12">
-            <v-text-field label="邮箱" variant="outlined" density="comfortable" v-model="form.email"
+            <v-text-field label="邮箱" variant="outlined" v-model="form.email"
               :rules="[val => !!val || '邮箱不可为空', val => /.+@.+\..+/.test(val) || '请输入有效的邮箱地址']" />
           </v-col>
           <v-col cols="12">
-            <v-text-field label="密码" type="password" variant="outlined" density="comfortable"
-              v-model="form.password" :rules="[val => !!val || '密码不可为空']" />
+            <v-text-field label="密码" type="password" variant="outlined" v-model="form.password"
+              :rules="[val => !!val || '密码不可为空']" />
           </v-col>
         </v-row>
         <v-card-text class="text-center pa-0">
@@ -28,7 +28,8 @@
             <v-btn variant="plain" class="px-0" color="primary">忘记密码？</v-btn>
           </div>
           <div class="my-1rem">
-            <v-btn color="primary" block flat type="submit" :loading="submitting">登录</v-btn>
+            <v-btn color="primary" block flat type="submit" :loading="submitting"
+              density="default">登录</v-btn>
           </div>
           <div class="pa-0 flex items-center" cols="12">
             <div>还没有账号？</div>
@@ -43,7 +44,7 @@
 <script setup lang="ts">
 import { SubmitEventPromise } from 'vuetify'
 import { reactive, ref } from 'vue'
-import { getPublicKey, getToken } from '@/models/auth'
+import { getPublicKey, getToken } from '@/services/auth'
 import JSEncrypt from 'jsencrypt'
 import { useRouter } from 'vue-router'
 import { setToken } from '@/utils/auth'

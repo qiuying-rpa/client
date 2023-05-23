@@ -1,11 +1,12 @@
 // Composables
-import { getPermissions } from '@/models/auth'
+import { getPermissions } from '@/services/auth'
 import { useAppStore, useNotifierStore } from '@/store/app'
 import { getAccessToken, removeToken } from '@/utils/auth'
 import { decodeJwt } from '@/utils/encrypt'
 import { useTitle } from '@vueuse/core'
 import { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
+import NProgress from 'nprogress'
 
 
 const routes: RouteRecordRaw[] = [
@@ -119,7 +120,8 @@ const routes: RouteRecordRaw[] = [
           order: 0,
           tags: ['menu', 'nav']
         }
-      }, {
+      },
+      {
         path: 'processes',
         name: '流程管理',
         component: () => import('@/views/Processes.vue'),
@@ -182,12 +184,12 @@ function checkAuthorized(certain: string, authorized: string[]) {
 }
 
 router.beforeEach(async (to) => {
-  const { setError, setLoading } = useAppStore()
+  const { setError } = useAppStore()
 
   if (!to.matched.length) {
     setError(404)
   } else {
-    setLoading(0)
+    NProgress.start()
     useTitle('Loading.. | 秋英 RPA')
 
     if (to.meta.tag !== 'public') {
@@ -221,10 +223,7 @@ router.beforeEach(async (to) => {
 })
 
 router.afterEach((to) => {
-  const { loading, setLoading } = useAppStore()
-  if (loading) {
-    setLoading(100)
-  }
+  NProgress.done()
   useTitle(`${to.name as string || ':/'} | 秋英 RPA`)
 })
 

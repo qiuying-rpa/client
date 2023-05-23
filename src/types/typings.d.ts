@@ -1,3 +1,10 @@
+// to handle some name repeat problems
+declare namespace Qiuying {
+  interface Permissions {
+    actions: PermissionValue
+    menus: PermissionValue
+  }
+}
 // -- app
 type ValueType = string | number | boolean
 
@@ -24,11 +31,6 @@ interface QNotification {
   content: string
   type: NotificationType
   duration: number
-}
-
-interface Permissions {
-  actions: PermissionValue
-  menus: PermissionValue
 }
 
 interface BaseResponse<T = any> {
@@ -89,3 +91,9 @@ interface CommonArgItem {
   options?: SimpleItem<ValueType>[]
 }
 
+// --- auth
+
+interface GetTokenData {
+  access_token: string
+  refresh_token: string
+}

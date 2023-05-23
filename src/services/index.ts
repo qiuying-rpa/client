@@ -1,9 +1,9 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
-import { getAccessToken, getRefreshToken, removeToken } from './auth'
+import { getAccessToken, getRefreshToken, removeToken } from '../utils/auth'
 import { useNotifierStore } from '@/store/app'
 import { useRouter } from 'vue-router'
-import { refreshToken } from '@/models/auth'
-import { setToken } from './auth'
+import { refreshToken } from '@/services/auth'
+import { setToken } from '../utils/auth'
 
 const responseInterceptor = (response: AxiosResponse) => {
   return Promise.resolve(response.data)

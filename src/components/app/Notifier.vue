@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-4 left-50% translate-x--50% z-2048">
+  <div class="fixed top-4 left-50% translate-x--50% z-99999">
     <notification v-for="notification, index in notifications" :key="notification.symbol"
       :class="{ 'mt-2': index > 0 }" v-bind="notification" />
   </div>
